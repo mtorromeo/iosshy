@@ -1,0 +1,4 @@
+*.pyc
+*.pyo
+Ui_*.py
+*_rc.py
