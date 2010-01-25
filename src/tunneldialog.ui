@@ -79,7 +79,11 @@
        </widget>
       </item>
       <item row="2" column="1">
-       <widget class="QLineEdit" name="txtLocalPort"/>
+       <widget class="QLineEdit" name="txtLocalPort">
+        <property name="inputMask">
+         <string>00009; </string>
+        </property>
+       </widget>
       </item>
       <item row="3" column="0">
        <widget class="QLabel" name="lblPort">
@@ -92,7 +96,11 @@
        </widget>
       </item>
       <item row="3" column="1">
-       <widget class="QLineEdit" name="txtPort"/>
+       <widget class="QLineEdit" name="txtPort">
+        <property name="inputMask">
+         <string>00009; </string>
+        </property>
+       </widget>
       </item>
       <item row="4" column="0">
        <widget class="QLabel" name="lblPassword">
@@ -105,7 +113,11 @@
        </widget>
       </item>
       <item row="4" column="1">
-       <widget class="QLineEdit" name="txtPassword"/>
+       <widget class="QLineEdit" name="txtPassword">
+        <property name="echoMode">
+         <enum>QLineEdit::Password</enum>
+        </property>
+       </widget>
       </item>
       <item row="5" column="0">
        <widget class="QLabel" name="lblCommand">
@@ -162,7 +174,7 @@
       <enum>Qt::Horizontal</enum>
      </property>
      <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+      <set>QDialogButtonBox::Ok</set>
      </property>
     </widget>
    </item>
