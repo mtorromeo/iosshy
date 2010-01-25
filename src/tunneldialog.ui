@@ -102,7 +102,7 @@
         </property>
        </widget>
       </item>
-      <item row="4" column="0">
+      <item row="5" column="0">
        <widget class="QLabel" name="lblPassword">
         <property name="text">
          <string>Password</string>
@@ -112,14 +112,14 @@
         </property>
        </widget>
       </item>
-      <item row="4" column="1">
+      <item row="5" column="1">
        <widget class="QLineEdit" name="txtPassword">
         <property name="echoMode">
          <enum>QLineEdit::Password</enum>
         </property>
        </widget>
       </item>
-      <item row="5" column="0">
+      <item row="6" column="0">
        <widget class="QLabel" name="lblCommand">
         <property name="text">
          <string>Command</string>
@@ -129,13 +129,26 @@
         </property>
        </widget>
       </item>
-      <item row="5" column="1">
+      <item row="6" column="1">
        <widget class="QLineEdit" name="txtCommand"/>
       </item>
-      <item row="6" column="1">
+      <item row="7" column="1">
        <widget class="QCheckBox" name="chkCloseOnTerm">
         <property name="text">
          <string>Automatically close on command termination</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <widget class="QLineEdit" name="txtUsername"/>
+      </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="lblUsername">
+        <property name="text">
+         <string>Username</string>
+        </property>
+        <property name="buddy">
+         <cstring>txtUsername</cstring>
         </property>
        </widget>
       </item>
@@ -184,6 +197,14 @@
   <tabstop>listTunnels</tabstop>
   <tabstop>btnAddTunnel</tabstop>
   <tabstop>btnRemoveTunnel</tabstop>
+  <tabstop>txtName</tabstop>
+  <tabstop>txtHost</tabstop>
+  <tabstop>txtLocalPort</tabstop>
+  <tabstop>txtPort</tabstop>
+  <tabstop>txtUsername</tabstop>
+  <tabstop>txtPassword</tabstop>
+  <tabstop>txtCommand</tabstop>
+  <tabstop>chkCloseOnTerm</tabstop>
   <tabstop>buttonBox</tabstop>
  </tabstops>
  <resources>
@@ -197,8 +218,8 @@
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>248</x>
-     <y>254</y>
+     <x>512</x>
+     <y>375</y>
     </hint>
     <hint type="destinationlabel">
      <x>157</x>
@@ -213,8 +234,8 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>316</x>
-     <y>260</y>
+     <x>580</x>
+     <y>375</y>
     </hint>
     <hint type="destinationlabel">
      <x>286</x>

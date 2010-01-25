@@ -53,9 +53,10 @@ class TunnelDialog(QDialog, Ui_TunnelDialog):
 		tunnel = self._tunnels[self.listTunnels.row(current)]
 
 		self.txtName.setText( tunnel.name )
-		self.txtHost.setText( tunnel.host )
+		self.txtHost.setText( "localhost" if tunnel.host == "" else tunnel.host )
 		self.txtLocalPort.setText( "" if tunnel.localPort is None else str(tunnel.localPort) )
 		self.txtPort.setText( str(tunnel.port) )
+		self.txtUsername.setText( "root" if tunnel.username == "" else tunnel.username )
 		self.txtPassword.setText( "" if tunnel.password is None else tunnel.password )
 		self.txtCommand.setText( "" if tunnel.command is None else tunnel.command )
 		self.chkCloseOnTerm.setChecked( Qt.Checked if tunnel.autoClose else Qt.Unchecked )
@@ -82,6 +83,9 @@ class TunnelDialog(QDialog, Ui_TunnelDialog):
 		port = int(text)
 		if 0 < port < 65536:
 			self.currentTunnel().port = port
+
+	def on_txtUsername_textEdited(self, text):
+		self.currentTunnel().username = text
 
 	def on_txtPassword_textEdited(self, text):
 		self.currentTunnel().password = text
