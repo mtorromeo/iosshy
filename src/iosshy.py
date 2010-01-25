@@ -4,6 +4,10 @@ import sip, os, sys
 sip.setapi("QString", 2)
 sip.setapi("QVariant", 2)
 
+import warnings
+warnings.filterwarnings("ignore", ".*sha module is deprecated.*", DeprecationWarning)
+warnings.filterwarnings("ignore", ".*md5 module is deprecated.*", DeprecationWarning)
+
 from PyQt4.QtCore import QCoreApplication, QTranslator, QLocale, QSettings
 from PyQt4.QtGui import QApplication, QSystemTrayIcon
 
