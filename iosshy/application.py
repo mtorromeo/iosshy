@@ -13,7 +13,10 @@ from PyQt4.QtGui import QApplication, QSystemTrayIcon
 
 from tunneldialog import TunnelDialog
 
-if __name__ == "__main__":
+app = None
+
+def run():
+	global app
 	app = QApplication(sys.argv)
 	app.setOrganizationName("MTSoft")
 	app.setApplicationName("IOSSHy")
@@ -30,3 +33,6 @@ if __name__ == "__main__":
 	else:
 		print "System tray not available. Exiting."
 		sys.exit(1)
+
+if __name__ == "__main__":
+	run()
