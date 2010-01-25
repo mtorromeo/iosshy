@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
+import os
 from PyQt4.QtGui import QDialog, QSystemTrayIcon, QIcon, QMenu, QAction, QKeySequence, QListWidgetItem
-from PyQt4.QtCore import Qt, pyqtSignature
+from PyQt4.QtCore import Qt, pyqtSignature, QSettings
 from tunnel import Tunnel
 from Ui_tunneldialog import Ui_TunnelDialog
 
@@ -42,6 +43,9 @@ class TunnelDialog(QDialog, Ui_TunnelDialog):
 		self.tray.activated.connect(self.trayClicked)
 		self.tray.setContextMenu(self.context)
 		self.tray.show()
+		
+		# Load settings
+		self.readSettings()
 
 	def closeEvent(self, event):
 		if not self._explicitQuit:
@@ -75,22 +79,10 @@ class TunnelDialog(QDialog, Ui_TunnelDialog):
 		self.currentTunnel().host = text
 
 	def on_txtLocalPort_textEdited(self, text):
-		try:
-			port = int(text)
-		except:
-			pass
-		else:
-			if 0 < port < 65536:
-				self.currentTunnel().localPort = port
+		self.currentTunnel().localPort = text
 
 	def on_txtPort_textEdited(self, text):
-		try:
-			port = int(text)
-		except:
-			pass
-		else:
-			if 0 < port < 65536:
-				self.currentTunnel().port = port
+		self.currentTunnel().port = text
 
 	def on_txtUsername_textEdited(self, text):
 		self.currentTunnel().username = text
@@ -109,14 +101,35 @@ class TunnelDialog(QDialog, Ui_TunnelDialog):
 		tunnel = Tunnel(self)
 		self._tunnels.append(tunnel)
 		self.listTunnels.setCurrentItem(tunnel.item)
-
 		self.context.insertAction(self.actionLastSep, tunnel.action)
 		self.context.removeAction(self.actionNoTun)
 
 	def trayClicked(self, reason):
 		if reason == QSystemTrayIcon.DoubleClick:
 			self.show()
+	
+	def readSettings(self):
+		if os.name == 'nt':
+			settings = QSettings()
+		else:
+			settings = QSettings(os.path.expanduser("~/.iosshy.ini"), QSettings.IniFormat)
+		for name in settings.childGroups():
+			tunnel = Tunnel(self)
+			tunnel.name = name
+			tunnel.readSettings(settings)
+			self._tunnels.append(tunnel)
+			self.context.insertAction(self.actionLastSep, tunnel.action)
+			self.context.removeAction(self.actionNoTun)
+	
+	def writeSettings(self):
+		if os.name == 'nt':
+			settings = QSettings()
+		else:
+			settings = QSettings(os.path.expanduser("~/.iosshy.ini"), QSettings.IniFormat)
+		for tunnel in self._tunnels:
+			tunnel.writeSettings(settings)
 
 	def quit(self):
+		self.writeSettings()
 		self._explicitQuit = True
 		self.close()

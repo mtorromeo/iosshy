@@ -75,8 +75,8 @@ class Tunnel(object):
 		self._parent = parent
 		self._name = "New Tunnel"
 		self.host = "localhost"
-		self.localPort = None
-		self.port = 80
+		self._localPort = None
+		self._port = 80
 		self.username = "root"
 		self.password = None
 		self.command = None
@@ -85,6 +85,14 @@ class Tunnel(object):
 		self._action.setCheckable(True)
 		self._action.toggled.connect(self.toggle)
 		self._item = QListWidgetItem(self._name, self._parent.listTunnels)
+	
+	def _validatePort(self, port):
+		try:
+			port = int(port.strip())
+		except:
+			return None
+		else:
+			return port if 0 < port < 65536 else None
 
 	def getAction(self):
 		return self._action
@@ -99,10 +107,51 @@ class Tunnel(object):
 		self._name = name
 		self._action.setText(name)
 		self._item.setText(name)
+	
+	def getPort(self):
+		return self._port
+	
+	def setPort(self, port):
+		port = self._validatePort(port)
+		if port is not None:
+			self._port = port
+	
+	def getLocalPort(self):
+		return self._localPort
+	
+	def setLocalPort(self, port):
+		self._localPort = self._validatePort(port)
 
 	name = property(getName, setName)
+	port = property(getPort, setPort)
+	localPort = property(getLocalPort, setLocalPort)
 	action = property(getAction)
 	item = property(getItem)
+	
+	def readSettings(self, settings):
+		settings.beginGroup(self.name)
+		self.host = settings.value("host", "localhost")
+		self.localPort = settings.value("localPort", None)
+		self.port = settings.value("port", None)
+		self.username = settings.value("username", "root")
+		self.password = settings.value("password", None)
+		self.command = settings.value("command", None)
+		self.autoClose = settings.value("autoClose", False)
+		settings.endGroup()
+	
+	def writeSettings(self, settings):
+		settings.beginGroup(self.name)
+		settings.setValue("host", self.host)
+		if self.localPort is not None:
+			settings.setValue("localPort", self.localPort)
+		settings.setValue("port", self.port)
+		settings.setValue("username", self.username)
+		if self.password is not None:
+			settings.setValue("password", self.password)
+		if self.command is not None:
+			settings.setValue("command", self.command)
+		settings.setValue("autoClose", self.autoClose)
+		settings.endGroup()
 
 	def toggle(self, openTunnel):
 		if openTunnel:
@@ -114,13 +163,15 @@ class Tunnel(object):
 
 	def open_(self):
 		try:
-			self._parent.tray.showMessage(self.name, "Opening tunnel")
 			self._thread = TunnelThread(username=self.username, password=self.password, ssh_server=self.host, local_port=self.localPort, remote_port=self.port)
 		except paramiko.BadHostKeyException as message:
 			self.close()
 			self._parent.tray.showMessage(self.name, str(message), QSystemTrayIcon.Warning)
-		except Exception:
+		except Exception as e:
+			print e
 			self.close()
+		else:
+			self._parent.tray.showMessage(self.name, "Tunnel active")
 
 		if self._thread is not None:
 			self._thread.start()
