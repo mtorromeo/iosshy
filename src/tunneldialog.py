@@ -75,14 +75,22 @@ class TunnelDialog(QDialog, Ui_TunnelDialog):
 		self.currentTunnel().host = text
 
 	def on_txtLocalPort_textEdited(self, text):
-		port = int(text)
-		if 0 < port < 65536:
-			self.currentTunnel().localPort = port
+		try:
+			port = int(text)
+		except:
+			pass
+		else:
+			if 0 < port < 65536:
+				self.currentTunnel().localPort = port
 
 	def on_txtPort_textEdited(self, text):
-		port = int(text)
-		if 0 < port < 65536:
-			self.currentTunnel().port = port
+		try:
+			port = int(text)
+		except:
+			pass
+		else:
+			if 0 < port < 65536:
+				self.currentTunnel().port = port
 
 	def on_txtUsername_textEdited(self, text):
 		self.currentTunnel().username = text
