@@ -12,7 +12,7 @@ from tunneldialog import TunnelDialog
 if __name__ == "__main__":
 	app = QApplication(sys.argv)
 	app.setOrganizationName("MTSoft")
-	app.setApplicationName("Tunneller")
+	app.setApplicationName("IOSSHy")
 
 	if QSystemTrayIcon.isSystemTrayAvailable():
 		translator = QTranslator()
