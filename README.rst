@@ -18,7 +18,7 @@ but at this point has only been tested on Linux operating systems.
 ------------
 Dependencies
 ------------
-IOSSHy depends upon the following external libraries:
+IOSSHy is a **python** application and it also depends upon the following external libraries:
 
 * PyKDE4 (Optional for better KDE4 integration)
 * PyQt4
