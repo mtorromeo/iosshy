@@ -190,19 +190,20 @@ class Tunnel(object):
 
 		if self._thread is not None:
 			self._thread.start()
-			command = self.command
-			try:
-				command = command.format(port=self.localPort)
-			except: pass
-			try:
-				self._commandThread = CommandThread(command)
-				if self.autoClose:
-					self._commandThread.terminated.connect(self.close)
-				self._commandThread.start()
-			except:
-				self._commandThread = None
-				if self.autoClose:
-					self.close()
+			if self.command is not None:
+				command = self.command
+				try:
+					command = command.format(port=self.localPort)
+				except: pass
+				try:
+					self._commandThread = CommandThread(command)
+					if self.autoClose:
+						self._commandThread.terminated.connect(self.close)
+					self._commandThread.start()
+				except:
+					self._commandThread = None
+					if self.autoClose:
+						self.close()
 
 	def close(self):
 		if self._thread is not None:
