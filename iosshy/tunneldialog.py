@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import os
-from PyQt4.QtGui import QDialog, QIcon, QAction, QKeySequence, QListWidgetItem
+from PyQt4.QtGui import QDialog, QIcon, QAction, QKeySequence, QListWidgetItem, QItemSelectionModel
 from PyQt4.QtCore import Qt, pyqtSignature, QSettings
 from tunnel import Tunnel
 from tray import Tray
@@ -48,23 +48,36 @@ class TunnelDialog(QDialog, Ui_TunnelDialog):
 
 	def on_listTunnels_currentItemChanged(self, current, previous):
 		self.grpTunnelProperties.setEnabled(current is not None)
-		tunnel = self._tunnels[self.listTunnels.row(current)]
+		if current is not None:
+			tunnel = self._tunnels[self.listTunnels.row(current)]
 
-		self.txtName.setText( tunnel.name )
-		self.txtHost.setText( "localhost" if tunnel.host == "" else tunnel.host )
-		self.txtLocalPort.setText( "" if tunnel.localPort is None else str(tunnel.localPort) )
-		self.txtPort.setText( str(tunnel.port) )
-		self.txtUsername.setText( "root" if tunnel.username == "" else tunnel.username )
-		self.txtPassword.setText( "" if tunnel.password is None else tunnel.password )
-		self.txtCommand.setText( "" if tunnel.command is None else tunnel.command )
-		self.chkCloseOnTerm.setChecked( Qt.Checked if tunnel.autoClose else Qt.Unchecked )
+			self.txtName.setText( tunnel.name )
+			self.txtHost.setText( "localhost" if tunnel.host == "" else tunnel.host )
+			self.txtLocalPort.setText( "" if tunnel.localPort is None else str(tunnel.localPort) )
+			self.txtPort.setText( str(tunnel.port) )
+			self.txtUsername.setText( "root" if tunnel.username == "" else tunnel.username )
+			self.txtPassword.setText( "" if tunnel.password is None else tunnel.password )
+			self.txtCommand.setText( "" if tunnel.command is None else tunnel.command )
+			self.chkCloseOnTerm.setChecked( Qt.Checked if tunnel.autoClose else Qt.Unchecked )
 
-		self.txtName.setFocus()
-		self.txtName.selectAll()
+			self.txtName.setFocus()
+			self.txtName.selectAll()
+		else:
+			self.txtName.setText("")
+			self.txtHost.setText("")
+			self.txtLocalPort.setText("")
+			self.txtPort.setText("")
+			self.txtUsername.setText("")
+			self.txtPassword.setText("")
+			self.txtCommand.setText("")
+			self.chkCloseOnTerm.setChecked(Qt.Unchecked)
 
 	def currentTunnel(self):
-		ti = self.listTunnels.currentRow()
-		return self._tunnels[ti]
+		try:
+			ti = self.listTunnels.currentRow()
+			return None if ti < 0 else self._tunnels[ti]
+		except IndexError:
+			return None
 
 	def on_txtName_textEdited(self, text):
 		self.currentTunnel().name = text
@@ -88,7 +101,8 @@ class TunnelDialog(QDialog, Ui_TunnelDialog):
 		self.currentTunnel().command = text
 
 	def on_chkCloseOnTerm_stateChanged(self, state):
-		self.currentTunnel().autoClose = state == Qt.Checked
+		if self.currentTunnel() is not None:
+			self.currentTunnel().autoClose = state == Qt.Checked
 
 	@pyqtSignature("")
 	def on_btnAddTunnel_clicked(self):
@@ -97,6 +111,38 @@ class TunnelDialog(QDialog, Ui_TunnelDialog):
 		self.listTunnels.setCurrentItem(tunnel.item)
 		self.tray.menu.insertAction(self.actionLastSep, tunnel.action)
 		self.tray.menu.removeAction(self.actionNoTun)
+	
+	@pyqtSignature("")
+	def on_btnDuplicateTunnel_clicked(self):
+		cur = self.currentTunnel()
+		if cur is not None:
+			tunnel = Tunnel(self)
+			tunnel.name = cur.name+" (copy)"
+			tunnel.host = cur.host
+			tunnel.localPort = cur.localPort
+			tunnel.port = cur.port
+			tunnel.username = cur.username
+			tunnel.password = cur.password
+			tunnel.command = cur.command
+			tunnel.autoClose = cur.autoClose
+			self._tunnels.append(tunnel)
+			self.listTunnels.setCurrentItem(tunnel.item)
+			self.tray.menu.insertAction(self.actionLastSep, tunnel.action)
+	
+	@pyqtSignature("")
+	def on_btnRemoveTunnel_clicked(self):
+		tunnel = self.currentTunnel()
+		if tunnel is not None:
+			ti = self.listTunnels.currentRow()
+			del self._tunnels[ti]
+			self.listTunnels.setCurrentRow(0 if ti != 0 else 1)
+			self.listTunnels.takeItem(ti)
+			self.listTunnels.setCurrentItem(None, QItemSelectionModel.Clear)
+			self.tray.menu.removeAction(tunnel.action)
+			del tunnel
+			
+			if len(self._tunnels) == 0:
+				self.tray.menu.insertAction(self.actionLastSep, self.actionNoTun)
 
 	def activated(self):
 		self.show()
@@ -119,6 +165,7 @@ class TunnelDialog(QDialog, Ui_TunnelDialog):
 			settings = QSettings()
 		else:
 			settings = QSettings(os.path.expanduser("~/.iosshy.ini"), QSettings.IniFormat)
+		settings.clear()
 		for tunnel in self._tunnels:
 			tunnel.writeSettings(settings)
 
