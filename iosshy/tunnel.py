@@ -2,6 +2,8 @@
 
 import paramiko, select, SocketServer
 from threading import Thread
+from subprocess import Popen
+from PyQt4.QtCore import QObject, pyqtSignal
 
 class ForwardServer(SocketServer.ThreadingTCPServer):
 	daemon_threads = True
@@ -66,12 +68,25 @@ class TunnelThread(Thread):
 		del self.ssh_client
 		Thread.join(self)
 
+class CommandThread(Thread, QObject):
+	terminated = pyqtSignal()
+
+	def __init__(self, command):
+		Thread.__init__(self)
+		QObject.__init__(self)
+		self.pipe = Popen(command, shell=True)
+
+	def run(self):
+		self.pipe.communicate()
+		self.terminated.emit()
+
 from PyQt4.QtGui import QAction, QListWidgetItem, QSystemTrayIcon
 from PyQt4.QtCore import Qt
 
 class Tunnel(object):
 	def __init__(self, parent):
 		self._thread = None
+		self._commandThread = None
 		self._parent = parent
 		self._name = "New Tunnel"
 		self.host = "localhost"
@@ -175,11 +190,26 @@ class Tunnel(object):
 
 		if self._thread is not None:
 			self._thread.start()
+			command = self.command
+			try:
+				command = command.format(port=self.localPort)
+			except: pass
+			try:
+				self._commandThread = CommandThread(command)
+				if self.autoClose:
+					self._commandThread.terminated.connect(self.close)
+				self._commandThread.start()
+			except:
+				self._commandThread = None
+				if self.autoClose:
+					self.close()
 
 	def close(self):
 		if self._thread is not None:
 			self._parent.tray.showMessage(self.name, "Closing tunnel")
+			if self._commandThread is not None:
+				self._commandThread.join()
+				self._commandThread = None
 			self._thread.join()
-			del self._thread
 			self._thread = None
 		self._action.setChecked(False)
