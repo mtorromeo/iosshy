@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 
 import os
-from PyQt4.QtGui import QDialog, QSystemTrayIcon, QIcon, QMenu, QAction, QKeySequence, QListWidgetItem
+from PyQt4.QtGui import QDialog, QIcon, QAction, QKeySequence, QListWidgetItem
 from PyQt4.QtCore import Qt, pyqtSignature, QSettings
 from tunnel import Tunnel
+from tray import Tray
 from Ui_tunneldialog import Ui_TunnelDialog
 
 class TunnelDialog(QDialog, Ui_TunnelDialog):
@@ -15,35 +16,28 @@ class TunnelDialog(QDialog, Ui_TunnelDialog):
 		# Tunnels
 		self._tunnels = []
 
-		# Setup contextual menu
-		self.context = QMenu("IOSSHy", self)
+		# Setup tray
+		self.tray = Tray("IOSSHy", QIcon(":/icons/network-server.png"))
+		self.tray.activated.connect(self.activated)
 
-		action = QAction("&Configure", self.context)
+		action = QAction("&Configure", self.tray.menu)
 		action.setIcon(QIcon(":/icons/configure.png"))
 		action.triggered.connect(self.show)
-		self.context.addAction(action)
-		self.context.setDefaultAction(action)
+		self.tray.menu.addAction(action)
+		self.tray.menu.setDefaultAction(action)
 
-		self.context.addSeparator()
-		self.actionNoTun = QAction("No tunnels configured", self.context)
+		self.tray.menu.addSeparator()
+		self.actionNoTun = QAction("No tunnels configured", self.tray.menu)
 		self.actionNoTun.setEnabled(False)
-		self.context.addAction(self.actionNoTun)
-		self.actionLastSep = self.context.addSeparator()
+		self.tray.menu.addAction(self.actionNoTun)
+		self.actionLastSep = self.tray.menu.addSeparator()
 
-		action = QAction("&Quit", self.context)
+		action = QAction("&Quit", self.tray.menu)
 		action.setIcon(QIcon(":/icons/application-exit.png"))
 		action.setShortcut(QKeySequence(Qt.CTRL + Qt.Key_Q))
 		action.triggered.connect(self.quit)
-		self.context.addAction(action)
+		self.tray.menu.addAction(action)
 
-		# Setup tray
-		self.tray = QSystemTrayIcon()
-		self.tray.setToolTip("IOSSHy")
-		self.tray.setIcon(QIcon(":/icons/network-server.png"))
-		self.tray.activated.connect(self.trayClicked)
-		self.tray.setContextMenu(self.context)
-		self.tray.show()
-		
 		# Load settings
 		self.readSettings()
 
@@ -101,13 +95,12 @@ class TunnelDialog(QDialog, Ui_TunnelDialog):
 		tunnel = Tunnel(self)
 		self._tunnels.append(tunnel)
 		self.listTunnels.setCurrentItem(tunnel.item)
-		self.context.insertAction(self.actionLastSep, tunnel.action)
-		self.context.removeAction(self.actionNoTun)
+		self.tray.menu.insertAction(self.actionLastSep, tunnel.action)
+		self.tray.menu.removeAction(self.actionNoTun)
 
-	def trayClicked(self, reason):
-		if reason == QSystemTrayIcon.DoubleClick:
-			self.show()
-	
+	def activated(self):
+		self.show()
+
 	def readSettings(self):
 		if os.name == 'nt':
 			settings = QSettings()
@@ -118,9 +111,9 @@ class TunnelDialog(QDialog, Ui_TunnelDialog):
 			tunnel.name = name
 			tunnel.readSettings(settings)
 			self._tunnels.append(tunnel)
-			self.context.insertAction(self.actionLastSep, tunnel.action)
-			self.context.removeAction(self.actionNoTun)
-	
+			self.tray.menu.insertAction(self.actionLastSep, tunnel.action)
+			self.tray.menu.removeAction(self.actionNoTun)
+
 	def writeSettings(self):
 		if os.name == 'nt':
 			settings = QSettings()

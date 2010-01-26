@@ -81,11 +81,11 @@ class Tunnel(object):
 		self.password = None
 		self.command = None
 		self.autoClose = False
-		self._action = QAction(self._name, self._parent.context)
+		self._action = QAction(self._name, self._parent.tray.menu)
 		self._action.setCheckable(True)
 		self._action.toggled.connect(self.toggle)
 		self._item = QListWidgetItem(self._name, self._parent.listTunnels)
-	
+
 	def _validatePort(self, port):
 		try:
 			port = int(port.strip())
@@ -107,18 +107,18 @@ class Tunnel(object):
 		self._name = name
 		self._action.setText(name)
 		self._item.setText(name)
-	
+
 	def getPort(self):
 		return self._port
-	
+
 	def setPort(self, port):
 		port = self._validatePort(port)
 		if port is not None:
 			self._port = port
-	
+
 	def getLocalPort(self):
 		return self._localPort
-	
+
 	def setLocalPort(self, port):
 		self._localPort = self._validatePort(port)
 
@@ -127,7 +127,7 @@ class Tunnel(object):
 	localPort = property(getLocalPort, setLocalPort)
 	action = property(getAction)
 	item = property(getItem)
-	
+
 	def readSettings(self, settings):
 		settings.beginGroup(self.name)
 		self.host = settings.value("host", "localhost")
@@ -138,7 +138,7 @@ class Tunnel(object):
 		self.command = settings.value("command", None)
 		self.autoClose = settings.value("autoClose", False)
 		settings.endGroup()
-	
+
 	def writeSettings(self, settings):
 		settings.beginGroup(self.name)
 		settings.setValue("host", self.host)
