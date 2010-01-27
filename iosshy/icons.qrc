@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="/">
+    <file>icons/edit-copy.png</file>
     <file>icons/dialog-ok.png</file>
     <file>icons/application-exit.png</file>
     <file>icons/configure.png</file>

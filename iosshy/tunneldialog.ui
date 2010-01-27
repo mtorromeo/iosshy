@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>622</width>
+    <width>636</width>
     <height>381</height>
    </rect>
   </property>
@@ -46,6 +46,9 @@
       <string>Tunnel Properties</string>
      </property>
      <layout class="QFormLayout" name="formLayout">
+      <property name="fieldGrowthPolicy">
+       <enum>QFormLayout::ExpandingFieldsGrow</enum>
+      </property>
       <item row="0" column="0">
        <widget class="QLabel" name="lblName">
         <property name="text">
@@ -73,23 +76,6 @@
        <widget class="QLineEdit" name="txtHost"/>
       </item>
       <item row="2" column="0">
-       <widget class="QLabel" name="lblLocalPort">
-        <property name="text">
-         <string>Local Port</string>
-        </property>
-        <property name="buddy">
-         <cstring>txtLocalPort</cstring>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="1">
-       <widget class="QLineEdit" name="txtLocalPort">
-        <property name="inputMask">
-         <string>00009; </string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="0">
        <widget class="QLabel" name="lblPort">
         <property name="text">
          <string>Port</string>
@@ -99,12 +85,42 @@
         </property>
        </widget>
       </item>
-      <item row="3" column="1">
+      <item row="2" column="1">
        <widget class="QLineEdit" name="txtPort">
         <property name="inputMask">
          <string>00009; </string>
         </property>
        </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="lblLocalPort">
+        <property name="text">
+         <string>Local Port</string>
+        </property>
+        <property name="buddy">
+         <cstring>txtLocalPort</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QLineEdit" name="txtLocalPort">
+        <property name="inputMask">
+         <string>00009; </string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="lblUsername">
+        <property name="text">
+         <string>Username</string>
+        </property>
+        <property name="buddy">
+         <cstring>txtUsername</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <widget class="QLineEdit" name="txtUsername"/>
       </item>
       <item row="5" column="0">
        <widget class="QLabel" name="lblPassword">
@@ -143,19 +159,6 @@
         </property>
        </widget>
       </item>
-      <item row="4" column="1">
-       <widget class="QLineEdit" name="txtUsername"/>
-      </item>
-      <item row="4" column="0">
-       <widget class="QLabel" name="lblUsername">
-        <property name="text">
-         <string>Username</string>
-        </property>
-        <property name="buddy">
-         <cstring>txtUsername</cstring>
-        </property>
-       </widget>
-      </item>
      </layout>
     </widget>
    </item>
@@ -163,6 +166,12 @@
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <widget class="QPushButton" name="btnAddTunnel">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="text">
         <string>&amp;Add</string>
        </property>
@@ -173,7 +182,30 @@
       </widget>
      </item>
      <item>
+      <widget class="QPushButton" name="btnDuplicateTunnel">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string>&amp;Duplicate</string>
+       </property>
+       <property name="icon">
+        <iconset resource="icons.qrc">
+         <normaloff>:/icons/edit-copy.png</normaloff>:/icons/edit-copy.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QPushButton" name="btnRemoveTunnel">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="text">
         <string>&amp;Remove</string>
        </property>
@@ -225,7 +257,6 @@
   <tabstop>txtName</tabstop>
   <tabstop>txtHost</tabstop>
   <tabstop>txtLocalPort</tabstop>
-  <tabstop>txtPort</tabstop>
   <tabstop>txtUsername</tabstop>
   <tabstop>txtPassword</tabstop>
   <tabstop>txtCommand</tabstop>
