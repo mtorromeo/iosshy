@@ -253,14 +253,17 @@
  <tabstops>
   <tabstop>listTunnels</tabstop>
   <tabstop>btnAddTunnel</tabstop>
+  <tabstop>btnDuplicateTunnel</tabstop>
   <tabstop>btnRemoveTunnel</tabstop>
   <tabstop>txtName</tabstop>
   <tabstop>txtHost</tabstop>
+  <tabstop>txtPort</tabstop>
   <tabstop>txtLocalPort</tabstop>
   <tabstop>txtUsername</tabstop>
   <tabstop>txtPassword</tabstop>
   <tabstop>txtCommand</tabstop>
   <tabstop>chkCloseOnTerm</tabstop>
+  <tabstop>btnOK</tabstop>
  </tabstops>
  <resources>
   <include location="icons.qrc"/>
