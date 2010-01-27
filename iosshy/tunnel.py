@@ -103,7 +103,9 @@ class Tunnel(object):
 
 	def _validatePort(self, port):
 		try:
-			port = int(port.strip())
+			if type(port) is str:
+				port = port.strip()
+			port = int(port)
 		except:
 			return None
 		else:
