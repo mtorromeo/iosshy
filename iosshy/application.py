@@ -23,12 +23,11 @@ url = "http://github.com/mtorromeo/iosshy"
 
 def main():
 	global app, aboutData
-	app = QApplication(sys.argv)
-	app.setOrganizationName("MTSoft")
-	app.setApplicationName(name)
 	
 	try:
-		from PyKDE4.kdecore import KAboutData, ki18n
+		from PyKDE4.kdecore import ki18n, KAboutData, KCmdLineArgs
+		from PyKDE4.kdeui import KUniqueApplication
+		
 		aboutData = KAboutData(
 			name, #appName
 			"", #catalogName
@@ -47,14 +46,21 @@ def main():
 			"massimiliano.torromeo@gmail.com" #email
 		)
 		aboutData.setProgramLogo(QImage(":icons/network-server.png"))
-	except ImportError: pass
+		
+		KCmdLineArgs.init (sys.argv, aboutData)
+		app = KUniqueApplication()
+	except ImportError:
+		app = QApplication(sys.argv)
+		app.setOrganizationName("MTSoft")
+		app.setApplicationName(name)
+	
 
 	if QSystemTrayIcon.isSystemTrayAvailable():
 		translator = QTranslator()
 		qmFile = "tunneller_%s.qm" % QLocale.system().name()
 		if os.path.isfile(qmFile):
 			translator.load(qmFile)
-		QApplication.installTranslator(translator)
+		app.installTranslator(translator)
 
 		dialog = TunnelDialog()
 		sys.exit(app.exec_())
