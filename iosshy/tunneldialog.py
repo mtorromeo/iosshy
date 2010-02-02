@@ -7,6 +7,13 @@ from tunnel import Tunnel
 from tray import Tray
 from Ui_tunneldialog import Ui_TunnelDialog
 
+try:
+	from PyKDE4.kdeui import KAboutApplicationDialog
+	import application
+	kde = True
+except ImportError:
+	kde = False
+
 class TunnelDialog(QDialog, Ui_TunnelDialog):
 	def __init__(self):
 		QDialog.__init__(self)
@@ -31,6 +38,11 @@ class TunnelDialog(QDialog, Ui_TunnelDialog):
 		self.actionNoTun.setEnabled(False)
 		self.tray.menu.addAction(self.actionNoTun)
 		self.actionLastSep = self.tray.menu.addSeparator()
+
+		if kde:
+			action = QAction("&About", self.tray.menu)
+			action.triggered.connect(self.about)
+			self.tray.menu.addAction(action)
 
 		action = QAction("&Quit", self.tray.menu)
 		action.setIcon(QIcon(":/icons/application-exit.png"))
@@ -168,6 +180,10 @@ class TunnelDialog(QDialog, Ui_TunnelDialog):
 		settings.clear()
 		for tunnel in self._tunnels:
 			tunnel.writeSettings(settings)
+	
+	def about(self):
+		aboutDialog = KAboutApplicationDialog(application.aboutData, self)
+		aboutDialog.show()
 
 	def quit(self):
 		self.writeSettings()

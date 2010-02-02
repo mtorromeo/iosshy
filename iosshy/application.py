@@ -9,17 +9,45 @@ warnings.filterwarnings("ignore", ".*sha module is deprecated.*", DeprecationWar
 warnings.filterwarnings("ignore", ".*md5 module is deprecated.*", DeprecationWarning)
 
 from PyQt4.QtCore import QCoreApplication, QTranslator, QLocale, QSettings
-from PyQt4.QtGui import QApplication, QSystemTrayIcon
+from PyQt4.QtGui import QApplication, QSystemTrayIcon, QImage
 
 from tunneldialog import TunnelDialog
 
 app = None
+aboutData = None
 
-def run():
-	global app
+name = "IOSSHy"
+description = "Desktop tool to quickly setup SSH tunnels and automatically execute commands that make use of them"
+version = "1.0"
+url = "http://github.com/mtorromeo/iosshy"
+
+def main():
+	global app, aboutData
 	app = QApplication(sys.argv)
 	app.setOrganizationName("MTSoft")
-	app.setApplicationName("IOSSHy")
+	app.setApplicationName(name)
+	
+	try:
+		from PyKDE4.kdecore import KAboutData, ki18n
+		aboutData = KAboutData(
+			name, #appName
+			"", #catalogName
+			ki18n(name), #programName
+			version,
+			ki18n(description), #shortDescription
+			KAboutData.License_BSD, #licenseKey
+			ki18n("© 2010 Massimiliano Torromeo"), #copyrightStatement
+			ki18n(""), #text
+			url #homePageAddress
+		)
+		aboutData.setBugAddress("http://github.com/mtorromeo/iosshy/issues")
+		aboutData.addAuthor(
+			ki18n("Massimiliano Torromeo"), #name
+			ki18n("Main developer"), #task
+			"massimiliano.torromeo@gmail.com" #email
+		)
+		aboutData.setProgramLogo(QImage(":icons/network-server.png"))
+	except ImportError: pass
 
 	if QSystemTrayIcon.isSystemTrayAvailable():
 		translator = QTranslator()
@@ -35,4 +63,4 @@ def run():
 		sys.exit(1)
 
 if __name__ == "__main__":
-	run()
+	main()

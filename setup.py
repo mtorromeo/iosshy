@@ -60,15 +60,16 @@ else:
 		packages = find_packages()
 	)
 
+from iosshy import application
 setup(
-	name="IOSSHy",
-	version="1.0",
-	description='Desktop tool to quickly setup SSH tunnels and automatically execute commands that make use of them',
+	name=application.name,
+	version=application.version,
+	description=application.description,
 	long_description=open(README).read(),
 	keywords='qt ssh tunnel',
 	author="Massimiliano Torromeo",
 	author_email="massimiliano.torromeo@gmail.com",
-	url="http://github.com/mtorromeo/iosshy",
+	url=application.url,
 	license="MIT License",
 	**extra_options
 )

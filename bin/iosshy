@@ -5,4 +5,4 @@ import sys, os, string
 sys.path.insert(0, os.path.normpath(os.path.join(os.path.abspath(sys.argv[0]), os.pardir, os.pardir)))
 
 from iosshy import application
-application.run()
+application.main()
