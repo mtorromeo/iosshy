@@ -12,6 +12,7 @@ Usage (Mac OS X):
 Usage (Windows):
     python setup.py py2exe
 """
+from iosshy import application
 import sys, os
 from setuptools import setup, find_packages
 
@@ -46,7 +47,7 @@ elif sys.platform == 'win32':
 	extra_options = dict(
 		windows=[{
 			"script": mainscript,
-			#"icon_resources": [(0, "app.ico")]
+			"icon_resources": [(0, "iosshy.ico")]
 		}],
 		options={"py2exe": {
 			"optimize": 2,
@@ -60,7 +61,6 @@ else:
 		packages = find_packages()
 	)
 
-from iosshy import application
 setup(
 	name=application.name,
 	version=application.version,
