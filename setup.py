@@ -36,14 +36,14 @@ if sys.platform == 'darwin':
 	)
 elif sys.platform == 'win32':
 	import py2exe
-	
+
 	origIsSystemDLL = py2exe.build_exe.isSystemDLL
 	def isSystemDLL(pathname):
 		if os.path.basename(pathname).lower() == "msvcp90.dll":
 			return 0
 		return origIsSystemDLL(pathname)
 	py2exe.build_exe.isSystemDLL = isSystemDLL
-	
+
 	extra_options = dict(
 		windows=[{
 			"script": mainscript,
@@ -70,6 +70,6 @@ setup(
 	author="Massimiliano Torromeo",
 	author_email="massimiliano.torromeo@gmail.com",
 	url=application.url,
-	license="MIT License",
+	license="BSD License",
 	**extra_options
 )
