@@ -38,129 +38,165 @@
     </widget>
    </item>
    <item row="0" column="1">
-    <widget class="QGroupBox" name="grpTunnelProperties">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
-     <property name="title">
-      <string>Tunnel Properties</string>
-     </property>
-     <layout class="QFormLayout" name="formLayout">
-      <property name="fieldGrowthPolicy">
-       <enum>QFormLayout::ExpandingFieldsGrow</enum>
-      </property>
-      <item row="0" column="0">
-       <widget class="QLabel" name="lblName">
-        <property name="text">
-         <string>Name</string>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QGroupBox" name="grpTunnelProperties">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="title">
+        <string>Tunnel Properties</string>
+       </property>
+       <layout class="QFormLayout" name="formLayout">
+        <property name="fieldGrowthPolicy">
+         <enum>QFormLayout::ExpandingFieldsGrow</enum>
         </property>
-        <property name="buddy">
-         <cstring>txtName</cstring>
+        <item row="0" column="0">
+         <widget class="QLabel" name="lblName">
+          <property name="text">
+           <string>Name</string>
+          </property>
+          <property name="buddy">
+           <cstring>txtName</cstring>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLineEdit" name="txtName"/>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="lblPort">
+          <property name="text">
+           <string>Remote Port</string>
+          </property>
+          <property name="buddy">
+           <cstring>txtPort</cstring>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QLineEdit" name="txtPort">
+          <property name="inputMask">
+           <string>00009; </string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="lblLocalPort">
+          <property name="text">
+           <string>Local Port</string>
+          </property>
+          <property name="buddy">
+           <cstring>txtLocalPort</cstring>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QLineEdit" name="txtLocalPort">
+          <property name="inputMask">
+           <string>00009; </string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0">
+         <widget class="QLabel" name="lblCommand">
+          <property name="text">
+           <string>Command</string>
+          </property>
+          <property name="buddy">
+           <cstring>txtCommand</cstring>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="1">
+         <widget class="QLineEdit" name="txtCommand"/>
+        </item>
+        <item row="4" column="1">
+         <widget class="QCheckBox" name="chkCloseOnTerm">
+          <property name="text">
+           <string>Automatically close on command termination</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item>
+      <widget class="QGroupBox" name="grpSshProperties">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="title">
+        <string>SSH connection options</string>
+       </property>
+       <layout class="QFormLayout" name="formLayout_2">
+        <property name="fieldGrowthPolicy">
+         <enum>QFormLayout::ExpandingFieldsGrow</enum>
         </property>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <widget class="QLineEdit" name="txtName"/>
-      </item>
-      <item row="1" column="0">
-       <widget class="QLabel" name="lblHost">
-        <property name="text">
-         <string>Host</string>
-        </property>
-        <property name="buddy">
-         <cstring>txtHost</cstring>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <widget class="QLineEdit" name="txtHost"/>
-      </item>
-      <item row="2" column="0">
-       <widget class="QLabel" name="lblPort">
-        <property name="text">
-         <string>Port</string>
-        </property>
-        <property name="buddy">
-         <cstring>txtPort</cstring>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="1">
-       <widget class="QLineEdit" name="txtPort">
-        <property name="inputMask">
-         <string>00009; </string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="0">
-       <widget class="QLabel" name="lblLocalPort">
-        <property name="text">
-         <string>Local Port</string>
-        </property>
-        <property name="buddy">
-         <cstring>txtLocalPort</cstring>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="1">
-       <widget class="QLineEdit" name="txtLocalPort">
-        <property name="inputMask">
-         <string>00009; </string>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="0">
-       <widget class="QLabel" name="lblUsername">
-        <property name="text">
-         <string>Username</string>
-        </property>
-        <property name="buddy">
-         <cstring>txtUsername</cstring>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="1">
-       <widget class="QLineEdit" name="txtUsername"/>
-      </item>
-      <item row="5" column="0">
-       <widget class="QLabel" name="lblPassword">
-        <property name="text">
-         <string>Password</string>
-        </property>
-        <property name="buddy">
-         <cstring>txtPassword</cstring>
-        </property>
-       </widget>
-      </item>
-      <item row="5" column="1">
-       <widget class="QLineEdit" name="txtPassword">
-        <property name="echoMode">
-         <enum>QLineEdit::Password</enum>
-        </property>
-       </widget>
-      </item>
-      <item row="6" column="0">
-       <widget class="QLabel" name="lblCommand">
-        <property name="text">
-         <string>Command</string>
-        </property>
-        <property name="buddy">
-         <cstring>txtCommand</cstring>
-        </property>
-       </widget>
-      </item>
-      <item row="6" column="1">
-       <widget class="QLineEdit" name="txtCommand"/>
-      </item>
-      <item row="7" column="1">
-       <widget class="QCheckBox" name="chkCloseOnTerm">
-        <property name="text">
-         <string>Automatically close on command termination</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
+        <item row="0" column="0">
+         <widget class="QLabel" name="lblHost">
+          <property name="text">
+           <string>Host</string>
+          </property>
+          <property name="buddy">
+           <cstring>txtHost</cstring>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLineEdit" name="txtHost"/>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="lblSshPort">
+          <property name="text">
+           <string>Port</string>
+          </property>
+          <property name="buddy">
+           <cstring>txtHost</cstring>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QLineEdit" name="txtSshPort">
+          <property name="inputMask">
+           <string>00009; </string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="lblUsername">
+          <property name="text">
+           <string>Username</string>
+          </property>
+          <property name="buddy">
+           <cstring>txtUsername</cstring>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QLineEdit" name="txtUsername"/>
+        </item>
+        <item row="3" column="0">
+         <widget class="QLabel" name="lblPassword">
+          <property name="text">
+           <string>Password</string>
+          </property>
+          <property name="buddy">
+           <cstring>txtPassword</cstring>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="1">
+         <widget class="QLineEdit" name="txtPassword">
+          <property name="echoMode">
+           <enum>QLineEdit::Password</enum>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+    </layout>
    </item>
    <item row="1" column="0">
     <layout class="QHBoxLayout" name="horizontalLayout">
@@ -256,13 +292,14 @@
   <tabstop>btnDuplicateTunnel</tabstop>
   <tabstop>btnRemoveTunnel</tabstop>
   <tabstop>txtName</tabstop>
-  <tabstop>txtHost</tabstop>
   <tabstop>txtPort</tabstop>
   <tabstop>txtLocalPort</tabstop>
-  <tabstop>txtUsername</tabstop>
-  <tabstop>txtPassword</tabstop>
   <tabstop>txtCommand</tabstop>
   <tabstop>chkCloseOnTerm</tabstop>
+  <tabstop>txtHost</tabstop>
+  <tabstop>txtSshPort</tabstop>
+  <tabstop>txtUsername</tabstop>
+  <tabstop>txtPassword</tabstop>
   <tabstop>btnOK</tabstop>
  </tabstops>
  <resources>
