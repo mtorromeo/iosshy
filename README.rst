@@ -1,7 +1,7 @@
 ===========
 Description
 ===========
-IOSSHy provides an easy to use desktop tool to quickly create and destory SSH tunnels and launch commands based on a preconfigured setup.
+IOSSHy provides an easy to use desktop tool to quickly create and destroy SSH tunnels and launch commands based on a preconfigured setup.
 
 -------------
 Example usage
@@ -13,7 +13,7 @@ When the program terminates the tunnel is automatically closed.
 Installation
 ============
 The application should work reasonably well on all the platforms where the dependencies can be satisfied (Linux, \*BSD, OSX, Windows, ...),
-but at this point has only been tested on Linux operating systems.
+but at this point has only been tested on Linux operating systems and Windows XP 32bit.
 
 ------------
 Dependencies
