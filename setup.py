@@ -12,6 +12,8 @@ Usage (Mac OS X):
 Usage (Windows):
     python setup.py py2exe
 """
+
+# Include iosshy application first to force sip api version 2
 from iosshy import application
 import sys, os
 from setuptools import setup, find_packages
@@ -19,6 +21,7 @@ from setuptools import setup, find_packages
 mainscript = 'bin/iosshy'
 README = os.path.join(os.path.dirname(__file__), 'README.rst')
 
+# Programmatically compile the forms with the uic module, sadly this is not possible for icon resources
 from PyQt4 import uic
 for form in ("tunneldialog.ui",):
 	uif = "Ui_{0}.py".format( form.rpartition('.')[0] )
@@ -37,6 +40,7 @@ if sys.platform == 'darwin':
 elif sys.platform == 'win32':
 	import py2exe
 
+	# Override isSystemDLL function to force inclusion of msvcp90.dll
 	origIsSystemDLL = py2exe.build_exe.isSystemDLL
 	def isSystemDLL(pathname):
 		if os.path.basename(pathname).lower() == "msvcp90.dll":
