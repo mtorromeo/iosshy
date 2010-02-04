@@ -62,13 +62,15 @@ class TunnelDialog(WindowBaseClass, Ui_TunnelDialog):
 
 	def on_listTunnels_currentItemChanged(self, current, previous):
 		self.grpTunnelProperties.setEnabled(current is not None)
+		self.grpSshProperties.setEnabled(current is not None)
 		if current is not None:
 			tunnel = self._tunnels[self.listTunnels.row(current)]
 
 			self.txtName.setText( tunnel.name )
 			self.txtHost.setText( "localhost" if tunnel.host == "" else tunnel.host )
-			self.txtLocalPort.setText( "" if tunnel.localPort is None else str(tunnel.localPort) )
+			self.txtLocalPort.setText( "0" if tunnel.localPort is None else str(tunnel.localPort) )
 			self.txtPort.setText( str(tunnel.port) )
+			self.txtSshPort.setText( str(tunnel.sshPort) )
 			self.txtUsername.setText( "root" if tunnel.username == "" else tunnel.username )
 			self.txtPassword.setText( "" if tunnel.password is None else tunnel.password )
 			self.txtCommand.setText( "" if tunnel.command is None else tunnel.command )
@@ -78,10 +80,11 @@ class TunnelDialog(WindowBaseClass, Ui_TunnelDialog):
 			self.txtName.selectAll()
 		else:
 			self.txtName.setText("")
-			self.txtHost.setText("")
-			self.txtLocalPort.setText("")
+			self.txtHost.setText("localhost")
+			self.txtLocalPort.setText("0")
 			self.txtPort.setText("")
-			self.txtUsername.setText("")
+			self.txtSshPort.setText("22")
+			self.txtUsername.setText("root")
 			self.txtPassword.setText("")
 			self.txtCommand.setText("")
 			self.chkCloseOnTerm.setChecked(Qt.Unchecked)
@@ -105,6 +108,9 @@ class TunnelDialog(WindowBaseClass, Ui_TunnelDialog):
 	def on_txtPort_textEdited(self, text):
 		self.currentTunnel().port = text
 
+	def on_txtSshPort_textEdited(self, text):
+		self.currentTunnel().sshPort = text
+
 	def on_txtUsername_textEdited(self, text):
 		self.currentTunnel().username = text
 
@@ -125,7 +131,7 @@ class TunnelDialog(WindowBaseClass, Ui_TunnelDialog):
 		self.listTunnels.setCurrentItem(tunnel.item)
 		self.tray.menu.insertAction(self.actionLastSep, tunnel.action)
 		self.tray.menu.removeAction(self.actionNoTun)
-	
+
 	@pyqtSignature("")
 	def on_btnDuplicateTunnel_clicked(self):
 		cur = self.currentTunnel()
@@ -142,7 +148,7 @@ class TunnelDialog(WindowBaseClass, Ui_TunnelDialog):
 			self._tunnels.append(tunnel)
 			self.listTunnels.setCurrentItem(tunnel.item)
 			self.tray.menu.insertAction(self.actionLastSep, tunnel.action)
-	
+
 	@pyqtSignature("")
 	def on_btnRemoveTunnel_clicked(self):
 		tunnel = self.currentTunnel()
@@ -154,7 +160,7 @@ class TunnelDialog(WindowBaseClass, Ui_TunnelDialog):
 			self.listTunnels.setCurrentItem(None, QItemSelectionModel.Clear)
 			self.tray.menu.removeAction(tunnel.action)
 			del tunnel
-			
+
 			if len(self._tunnels) == 0:
 				self.tray.menu.insertAction(self.actionLastSep, self.actionNoTun)
 
@@ -182,7 +188,7 @@ class TunnelDialog(WindowBaseClass, Ui_TunnelDialog):
 		settings.clear()
 		for tunnel in self._tunnels:
 			tunnel.writeSettings(settings)
-	
+
 	def about(self):
 		aboutDialog = KAboutApplicationDialog(application.aboutData, self)
 		aboutDialog.show()

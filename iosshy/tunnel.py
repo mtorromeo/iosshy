@@ -36,7 +36,7 @@ class Handler(SocketServer.BaseRequestHandler):
 		self.request.close()
 
 class TunnelThread(Thread):
-	def __init__(self, ssh_server, local_port, ssh_port=22, remote_host="localhost", remote_port=None, username=None, password=None):
+	def __init__(self, ssh_server, local_port=0, ssh_port=22, remote_host="localhost", remote_port=None, username=None, password=None):
 		Thread.__init__(self)
 		if remote_port is None:
 			remote_port = local_port
@@ -56,6 +56,7 @@ class TunnelThread(Thread):
 			chain_port = remote_port
 			ssh_transport = transport
 		self.ffwd_server = ForwardServer(('', self.local_port), SubHandler)
+		self.ip, self.local_port = self.ffwd_server.server_address
 
 	def run(self):
 		self.ffwd_server.serve_forever()
@@ -90,8 +91,9 @@ class Tunnel(object):
 		self._parent = parent
 		self._name = "New Tunnel"
 		self.host = "localhost"
-		self._localPort = None
+		self._localPort = 0
 		self._port = 80
+		self._sshPort = 22
 		self.username = "root"
 		self.password = None
 		self.command = None
@@ -138,16 +140,28 @@ class Tunnel(object):
 
 	def setLocalPort(self, port):
 		self._localPort = self._validatePort(port)
+		if self._localPort is None:
+			self._localPort = 0
+
+	def getSshPort(self):
+		return self._sshPort
+
+	def setSshPort(self, port):
+		port = self._validatePort(port)
+		if port is not None:
+			self._sshPort = port
 
 	name = property(getName, setName)
 	port = property(getPort, setPort)
 	localPort = property(getLocalPort, setLocalPort)
+	sshPort = property(getSshPort, setSshPort)
 	action = property(getAction)
 	item = property(getItem)
 
 	def readSettings(self, settings):
 		settings.beginGroup(self.name)
 		self.host = settings.value("host", "localhost")
+		self.sshPort = settings.value("sshPort", "22")
 		self.localPort = settings.value("localPort", None)
 		self.port = settings.value("port", None)
 		self.username = settings.value("username", "root")
@@ -159,6 +173,7 @@ class Tunnel(object):
 	def writeSettings(self, settings):
 		settings.beginGroup(self.name)
 		settings.setValue("host", self.host)
+		settings.setValue("sshPort", self.sshPort)
 		if self.localPort is not None:
 			settings.setValue("localPort", self.localPort)
 		settings.setValue("port", self.port)
@@ -180,7 +195,7 @@ class Tunnel(object):
 
 	def open_(self):
 		try:
-			self._thread = TunnelThread(username=self.username, password=self.password, ssh_server=self.host, local_port=self.localPort, remote_port=self.port)
+			self._thread = TunnelThread(username=self.username, password=self.password, ssh_server=self.host, ssh_port=self.sshPort, local_port=self.localPort, remote_port=self.port)
 		except paramiko.BadHostKeyException as message:
 			self.close()
 			self._parent.tray.showMessage(self.name, str(message), QSystemTrayIcon.Warning)
@@ -195,7 +210,7 @@ class Tunnel(object):
 			if self.command is not None:
 				command = self.command
 				try:
-					command = command.format(port=self.localPort)
+					command = command.format(port=self._thread.local_port)
 				except: pass
 				try:
 					self._commandThread = CommandThread(command)
