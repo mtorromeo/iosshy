@@ -22,7 +22,7 @@ IOSSHy is a **python** application and it also depends upon the following extern
 
 * PyKDE4 (Optional for better KDE4 integration)
 * PyQt4
-* Paramiko
+* python-paramiko
 
 ------------------
 Build instructions
