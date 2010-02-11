@@ -67,6 +67,7 @@ setup(
 	name = application.name,
 	packages = ["iosshy"],
 	scripts = [mainscript],
+	requires = ["paramiko"],
 	version = application.version,
 	description = application.description,
 	long_description = open(README).read(),
