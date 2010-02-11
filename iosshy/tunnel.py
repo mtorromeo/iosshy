@@ -3,7 +3,9 @@
 import paramiko, select, SocketServer
 from threading import Thread
 from subprocess import Popen
-from PyQt4.QtCore import QObject, pyqtSignal
+import keyring
+from PyQt4.QtCore import Qt, QObject, pyqtSignal
+from PyQt4.QtGui import QInputDialog, QLineEdit
 
 class ForwardServer(SocketServer.ThreadingTCPServer):
 	daemon_threads = True
@@ -95,7 +97,6 @@ class Tunnel(object):
 		self._port = 80
 		self._sshPort = 22
 		self.username = "root"
-		self.password = None
 		self.command = None
 		self.autoClose = False
 		self._action = QAction(self._name, self._parent.tray.menu)
@@ -165,7 +166,6 @@ class Tunnel(object):
 		self.localPort = settings.value("localPort", None)
 		self.port = settings.value("port", None)
 		self.username = settings.value("username", "root")
-		self.password = settings.value("password", None)
 		self.command = settings.value("command", None)
 		self.autoClose = settings.value("autoClose", False)
 		settings.endGroup()
@@ -178,8 +178,6 @@ class Tunnel(object):
 			settings.setValue("localPort", self.localPort)
 		settings.setValue("port", self.port)
 		settings.setValue("username", self.username)
-		if self.password is not None:
-			settings.setValue("password", self.password)
 		if self.command is not None:
 			settings.setValue("command", self.command)
 		settings.setValue("autoClose", self.autoClose)
@@ -194,16 +192,26 @@ class Tunnel(object):
 			self.close()
 
 	def open_(self):
-		try:
-			self._thread = TunnelThread(username=self.username, password=self.password, ssh_server=self.host, ssh_port=self.sshPort, local_port=self.localPort, remote_port=self.port)
-		except paramiko.BadHostKeyException as message:
-			self.close()
-			self._parent.tray.showMessage(self.name, str(message), QSystemTrayIcon.Warning)
-		except Exception as e:
-			print e
-			self.close()
-		else:
-			self._parent.tray.showMessage(self.name, "Tunnel active")
+		connectionName = "{0}@{1}:{2}".format(self.username, self.host, self.sshPort)
+		password = keyring.get_password("ssh", connectionName)
+		try2connect = True
+		while try2connect:
+			try2connect = False
+			try:
+				self._thread = TunnelThread(username=self.username, password=password, ssh_server=self.host, ssh_port=self.sshPort, local_port=self.localPort, remote_port=self.port)
+			except paramiko.BadHostKeyException as e:
+				self.close(str(e), QSystemTrayIcon.Warning)
+			except (paramiko.PasswordRequiredException, paramiko.AuthenticationException) as e:
+				(password, ok) = QInputDialog.getText(self._parent, "Password required for {0}".format(connectionName), "Insert password for {0}:".format(connectionName), QLineEdit.Password, "", Qt.Tool)
+				if ok:
+					keyring.set_password("ssh", connectionName, password)
+					try2connect = True
+				else:
+					self.close()
+			except Exception as e:
+				self.close(type(e).__name__+": "+str(e), QSystemTrayIcon.Critical)
+			else:
+				self._parent.tray.showMessage(self.name, "Tunnel active")
 
 		if self._thread is not None:
 			self._thread.start()
@@ -222,9 +230,9 @@ class Tunnel(object):
 					if self.autoClose:
 						self.close()
 
-	def close(self):
+	def close(self, message="Closing tunnel", icon=QSystemTrayIcon.Information):
+		self._parent.tray.showMessage(self.name, message, icon)
 		if self._thread is not None:
-			self._parent.tray.showMessage(self.name, "Closing tunnel")
 			if self._commandThread is not None:
 				self._commandThread.join()
 				self._commandThread = None
