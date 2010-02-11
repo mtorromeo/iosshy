@@ -64,7 +64,7 @@ LICENSE
 -------
 IOSSHy is free software released under the terms of the BSD license.
 
-© 2010 Massimiliano Torromeo
+Copyright (c) 2010 Massimiliano Torromeo
 
 See the LICENSE file provided with the source distribution for full details.
 
