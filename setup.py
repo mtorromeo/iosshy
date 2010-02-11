@@ -20,7 +20,7 @@ from setuptools import setup
 #from distutils.core import setup
 
 mainscript = 'bin/iosshy'
-README = os.path.join(os.path.dirname(__file__), 'README')
+README = os.path.join(os.path.dirname(__file__), 'README.rst')
 
 # Programmatically compile the forms with the uic module, sadly this is not possible for icon resources
 from PyQt4 import uic
