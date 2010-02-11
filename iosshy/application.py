@@ -18,7 +18,7 @@ aboutData = None
 
 name = "IOSSHy"
 description = "Desktop tool to quickly setup SSH tunnels and automatically execute commands that make use of them"
-version = "1.0"
+version = "1.1"
 url = "http://github.com/mtorromeo/iosshy"
 
 def main():
