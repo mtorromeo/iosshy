@@ -16,7 +16,8 @@ Usage (Windows):
 # Include iosshy application first to force sip api version 2
 from iosshy import application
 import sys, os
-from setuptools import setup, find_packages
+from setuptools import setup
+#from distutils.core import setup
 
 mainscript = 'bin/iosshy'
 README = os.path.join(os.path.dirname(__file__), 'README.rst')
@@ -60,20 +61,36 @@ elif sys.platform == 'win32':
 		}}
 	)
 else:
-	extra_options = dict(
-		scripts=[mainscript],
-		packages = find_packages()
-	)
+	extra_options = {}
 
 setup(
-	name=application.name,
-	version=application.version,
-	description=application.description,
-	long_description=open(README).read(),
-	keywords='qt ssh tunnel',
-	author="Massimiliano Torromeo",
-	author_email="massimiliano.torromeo@gmail.com",
-	url=application.url,
-	license="BSD License",
+	name = application.name,
+	packages = ["iosshy"],
+	scripts = [mainscript],
+	requires = ["paramiko", "keyring"],
+	version = application.version,
+	description = application.description,
+	long_description = open(README).read(),
+	author = "Massimiliano Torromeo",
+	author_email = "massimiliano.torromeo@gmail.com",
+	url = application.url,
+	download_url = "http://github.com/mtorromeo/iosshy/tarball/v"+application.version,
+	keywords = ["qt", "pyqt", "desktop", "ssh"],
+	classifiers = [
+		"Programming Language :: Python",
+		"Programming Language :: Python :: 2.6",
+		"Development Status :: 5 - Production/Stable",
+		"License :: OSI Approved :: BSD License",
+		"Environment :: X11 Applications :: Qt",
+		"Intended Audience :: System Administrators",
+		"Operating System :: MacOS :: MacOS X",
+		"Operating System :: Microsoft :: Windows",
+		"Operating System :: POSIX :: Linux",
+		"Operating System :: POSIX :: BSD",
+		"Natural Language :: English",
+		"Topic :: System :: Monitoring",
+		"Topic :: Utilities"
+	],
+	license = "BSD License",
 	**extra_options
 )

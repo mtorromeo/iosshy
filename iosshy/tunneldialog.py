@@ -8,7 +8,7 @@ from tray import Tray
 from Ui_tunneldialog import Ui_TunnelDialog
 
 try:
-	from PyKDE4.kdeui import KAboutApplicationDialog, KMainWindow
+	from PyKDE4.kdeui import KAboutApplicationDialog, KDialog, KMainWindow
 	import application
 	kde = True
 	class WindowBaseClass(QDialog, KMainWindow): pass
@@ -72,7 +72,6 @@ class TunnelDialog(WindowBaseClass, Ui_TunnelDialog):
 			self.txtPort.setText( str(tunnel.port) )
 			self.txtSshPort.setText( str(tunnel.sshPort) )
 			self.txtUsername.setText( "root" if tunnel.username == "" else tunnel.username )
-			self.txtPassword.setText( "" if tunnel.password is None else tunnel.password )
 			self.txtCommand.setText( "" if tunnel.command is None else tunnel.command )
 			self.chkCloseOnTerm.setChecked( Qt.Checked if tunnel.autoClose else Qt.Unchecked )
 
@@ -85,7 +84,6 @@ class TunnelDialog(WindowBaseClass, Ui_TunnelDialog):
 			self.txtPort.setText("")
 			self.txtSshPort.setText("22")
 			self.txtUsername.setText("root")
-			self.txtPassword.setText("")
 			self.txtCommand.setText("")
 			self.chkCloseOnTerm.setChecked(Qt.Unchecked)
 
@@ -114,9 +112,6 @@ class TunnelDialog(WindowBaseClass, Ui_TunnelDialog):
 	def on_txtUsername_textEdited(self, text):
 		self.currentTunnel().username = text
 
-	def on_txtPassword_textEdited(self, text):
-		self.currentTunnel().password = text
-
 	def on_txtCommand_textEdited(self, text):
 		self.currentTunnel().command = text
 
@@ -142,7 +137,6 @@ class TunnelDialog(WindowBaseClass, Ui_TunnelDialog):
 			tunnel.localPort = cur.localPort
 			tunnel.port = cur.port
 			tunnel.username = cur.username
-			tunnel.password = cur.password
 			tunnel.command = cur.command
 			tunnel.autoClose = cur.autoClose
 			self._tunnels.append(tunnel)
