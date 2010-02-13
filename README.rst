@@ -8,12 +8,12 @@ Password are stored in the keyring provided by the operating system (ES: gnome's
 
 Usage
 -----
-Whe the program is launched, the main interface is hidden and only the icon in the system tray is shown.
+When the program is launched, the main interface is hidden and only the icon in the system tray is shown.
 By clicking the tray icon, a configuration dialog will appear which allows to specify the tunnel configurations.
 
 A tunnel configuration consists of a name, the remote port that has to be forwarded locally, the local port (leaving this value to 0 will let IOSSHy choose a free high numbered port), an optional command to execute, and the ssh server details (host, port, and username). The password will be asked when needed.
 
-The command like may contain a special string "{port}" (without quotes) that will be replaces by the local port used for the tunnel, making it possible to write commands like this: "rdesktop localhost:{port}"
+The command like may contain a special string "{port}" (without quotes) that will be replaced by the local port used for the tunnel, making it possible to write commands like this: "rdesktop localhost:{port}"
 
 SSH public key authentication methods are supported through the ssh agents provided by each operating system (putty's pageant is supported).
 
@@ -31,9 +31,9 @@ Packages
 ''''''''
 The following packages are available:
 
- * `Windows 32bit installer <http://cloud.github.com/downloads/mtorromeo/iosshy/iosshy-win32-1.0.exe>`_
+ * `Windows 32bit installer <http://cloud.github.com/downloads/mtorromeo/iosshy/iosshy-win32-1.1.exe>`_
  * `Arch Linux <http://aur.archlinux.org/packages.php?ID=34495>`_
- * `Source tarball <http://github.com/mtorromeo/iosshy/tarball/v1.0>`_
+ * `Source tarball <http://github.com/mtorromeo/iosshy/tarball/v1.1>`_
 
 The code is hosted on `github <http://github.com/mtorromeo/iosshy>`_
 
