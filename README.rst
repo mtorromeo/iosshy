@@ -13,7 +13,9 @@ By clicking the tray icon, a configuration dialog will appear which allows to sp
 
 A tunnel configuration consists of a name, the remote port that has to be forwarded locally, the local port (leaving this value to 0 will let IOSSHy choose a free high numbered port), an optional command to execute, and the ssh server details (host, port, and username). The password will be asked when needed.
 
-The command like may contain a special string "{port}" (without quotes) that will be replaced by the local port used for the tunnel, making it possible to write commands like this: "rdesktop localhost:{port}"
+The command line may contain a special string "{port}" (without quotes) that will be replaced by the local port used for the tunnel, making it possible to write commands like::
+
+	rdesktop localhost:{port}
 
 SSH public key authentication methods are supported through the ssh agents provided by each operating system (putty's pageant is supported).
 
@@ -45,10 +47,10 @@ Dependencies
 ''''''''''''
 IOSSHy is a **python 2.6** application and it also depends upon the following external libraries:
 
-* PyKDE4 (Optional for better KDE4 integration)
-* PyQt4 (4.6+)
-* python-paramiko
-* python-keyring
+ * PyKDE4 (Optional for better KDE4 integration)
+ * PyQt4 (4.6+)
+ * python-paramiko
+ * python-keyring
 
 Build instructions
 ''''''''''''''''''
@@ -62,13 +64,13 @@ There is a unix shell script in the root of the distribution package named *buil
 
 LICENSE
 -------
-IOSSHy is free software released under the terms of the BSD license.
-
 Copyright (c) 2010 Massimiliano Torromeo
+
+IOSSHy is free software released under the terms of the BSD license.
 
 See the LICENSE file provided with the source distribution for full details.
 
-Author
-------
+Contacts
+--------
 
 * Massimiliano Torromeo <massimiliano.torromeo@gmail.com>
