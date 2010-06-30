@@ -62,6 +62,14 @@ There is a unix shell script in the root of the distribution package named *buil
 	chmod 755 bin/iosshy
 	bin/iosshy
 
+CHANGELOG
+---------
+
+Since version 1.1
+
+ * Called required Random.atfork in tunnel thread, to ensure RNG thread safety
+ * Suppressed RandomPool deprecation warning (paramiko should fix this)
+
 LICENSE
 -------
 Copyright (c) 2010 Massimiliano Torromeo
