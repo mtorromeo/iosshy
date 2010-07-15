@@ -55,6 +55,10 @@ class TunnelDialog(WindowBaseClass, Ui_TunnelDialog):
 		# Load settings
 		self.readSettings()
 
+	def hide(self):
+		self.writeSettings()
+		WindowBaseClass.hide(self)
+
 	def closeEvent(self, event):
 		if not self._explicitQuit:
 			self.hide()
