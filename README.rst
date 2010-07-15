@@ -65,6 +65,12 @@ There is a unix shell script in the root of the distribution package named *buil
 CHANGELOG
 ---------
 
+Since version 1.2
+
+ * Fixed crash on application quit
+ * Settings are saved as soon as the configuration dialog is closed
+ * Fixed crash in about dialog when main window is hidden
+
 Since version 1.1
 
  * Called required Random.atfork in tunnel thread, to ensure RNG thread safety
