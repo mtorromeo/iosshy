@@ -184,8 +184,10 @@ class TunnelDialog(WindowBaseClass, Ui_TunnelDialog):
 			tunnel.writeSettings(settings)
 
 	def about(self):
-		aboutDialog = KAboutApplicationDialog(application.aboutData, self)
-		aboutDialog.show()
+		KAboutApplicationDialog(application.aboutData, self).exec_()
+		if self.isHidden():
+			self.show()
+			self.hide()
 
 	def quit(self):
 		self.writeSettings()
