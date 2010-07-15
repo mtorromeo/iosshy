@@ -26,7 +26,7 @@ class TunnelDialog(WindowBaseClass, Ui_TunnelDialog):
 		self._tunnels = []
 
 		# Setup tray
-		self.tray = Tray("IOSSHy", QIcon(":/icons/network-server.png"))
+		self.tray = Tray(self, "IOSSHy", QIcon(":/icons/network-server.png"))
 		self.tray.activated.connect(self.activated)
 
 		action = QAction("&Configure", self.tray.menu)
@@ -197,4 +197,3 @@ class TunnelDialog(WindowBaseClass, Ui_TunnelDialog):
 		self.writeSettings()
 		self._explicitQuit = True
 		self.close()
-		sys.exit()

@@ -12,14 +12,16 @@ except ImportError:
 class Tray(QObject):
 	activated = pyqtSignal()
 
-	def __init__(self, title, icon):
+	def __init__(self, parent, title, icon):
 		QObject.__init__(self)
 
 		# Setup contextual menu
 		if kde:
-			self.menu = KMenu()
-			self.tray = KStatusNotifierItem()
+			self.menu = KMenu(parent)
+			self.tray = KStatusNotifierItem(parent)
+			self.tray.setStatus(KStatusNotifierItem.Active)
 			self.tray.setCategory(KStatusNotifierItem.ApplicationStatus)
+			self.tray.setAssociatedWidget(parent)
 			self.tray.setStandardActionsEnabled(False)
 			self.tray.activateRequested.connect(self._activateRequested)
 		else:
