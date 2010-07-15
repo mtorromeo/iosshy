@@ -7,7 +7,7 @@
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
 AppId={{697E9A13-6AFF-48CB-AD78-2515D6E8B18B}
 AppName=IOSSHy
-AppVerName=IOSSHy 1.0
+AppVerName=IOSSHy 1.3
 AppPublisher=Massimiliano Torromeo
 AppPublisherURL=http://github.com/mtorromeo/iosshy
 AppSupportURL=http://github.com/mtorromeo/iosshy
@@ -16,7 +16,7 @@ DefaultDirName={pf}\IOSSHy
 DefaultGroupName=IOSSHy
 AllowNoIcons=yes
 LicenseFile=C:\Documents and Settings\massimiliano\Desktop\iosshy\LICENSE
-OutputBaseFilename=iosshy-win32-1.0
+OutputBaseFilename=iosshy-win32-1.3
 Compression=lzma
 SolidCompression=yes
 
