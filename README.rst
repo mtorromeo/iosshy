@@ -33,9 +33,9 @@ Packages
 ''''''''
 The following packages are available:
 
- * `Windows 32bit installer <http://cloud.github.com/downloads/mtorromeo/iosshy/iosshy-win32-1.2.exe>`_
+ * `Windows 32bit installer <http://cloud.github.com/downloads/mtorromeo/iosshy/iosshy-win32-1.3.exe>`_
  * `Arch Linux <http://aur.archlinux.org/packages.php?ID=34495>`_
- * `Source tarball <http://github.com/mtorromeo/iosshy/tarball/v1.2>`_
+ * `Source tarball <http://github.com/mtorromeo/iosshy/tarball/v1.3>`_
 
 The code is hosted on `github <http://github.com/mtorromeo/iosshy>`_
 
