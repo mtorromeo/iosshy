@@ -93,6 +93,9 @@
         </item>
         <item row="2" column="1">
          <widget class="QLineEdit" name="txtLocalPort">
+          <property name="toolTip">
+           <string>If local port is set to 0, a random high-numbered port will be selected</string>
+          </property>
           <property name="inputMask">
            <string>00009; </string>
           </property>
@@ -109,7 +112,11 @@
          </widget>
         </item>
         <item row="3" column="1">
-         <widget class="QLineEdit" name="txtCommand"/>
+         <widget class="QLineEdit" name="txtCommand">
+          <property name="toolTip">
+           <string>The string {port} in the command line will be replaced by the local port number (useful when the local port is selected by IOSSHy)</string>
+          </property>
+         </widget>
         </item>
         <item row="4" column="1">
          <widget class="QCheckBox" name="chkCloseOnTerm">
@@ -175,23 +182,6 @@
         </item>
         <item row="2" column="1">
          <widget class="QLineEdit" name="txtUsername"/>
-        </item>
-        <item row="3" column="0">
-         <widget class="QLabel" name="lblPassword">
-          <property name="text">
-           <string>Password</string>
-          </property>
-          <property name="buddy">
-           <cstring>txtPassword</cstring>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="1">
-         <widget class="QLineEdit" name="txtPassword">
-          <property name="echoMode">
-           <enum>QLineEdit::Password</enum>
-          </property>
-         </widget>
         </item>
        </layout>
       </widget>
@@ -299,7 +289,6 @@
   <tabstop>txtHost</tabstop>
   <tabstop>txtSshPort</tabstop>
   <tabstop>txtUsername</tabstop>
-  <tabstop>txtPassword</tabstop>
   <tabstop>btnOK</tabstop>
  </tabstops>
  <resources>

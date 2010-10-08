@@ -7,6 +7,7 @@ sip.setapi("QVariant", 2)
 import warnings
 warnings.filterwarnings("ignore", ".*sha module is deprecated.*", DeprecationWarning)
 warnings.filterwarnings("ignore", ".*md5 module is deprecated.*", DeprecationWarning)
+warnings.filterwarnings("ignore", ".*This application uses RandomPool.*", DeprecationWarning)
 
 from PyQt4.QtCore import QCoreApplication, QTranslator, QLocale, QSettings
 from PyQt4.QtGui import QApplication, QSystemTrayIcon, QImage
@@ -18,16 +19,16 @@ aboutData = None
 
 name = "IOSSHy"
 description = "Desktop tool to quickly setup SSH tunnels and automatically execute commands that make use of them"
-version = "1.0"
+version = "1.3"
 url = "http://github.com/mtorromeo/iosshy"
 
 def main():
 	global app, aboutData
-	
+
 	try:
 		from PyKDE4.kdecore import ki18n, KAboutData, KCmdLineArgs
 		from PyKDE4.kdeui import KUniqueApplication
-		
+
 		aboutData = KAboutData(
 			name, #appName
 			"", #catalogName
@@ -46,14 +47,20 @@ def main():
 			"massimiliano.torromeo@gmail.com" #email
 		)
 		aboutData.setProgramLogo(QImage(":icons/network-server.png"))
-		
+
 		KCmdLineArgs.init (sys.argv, aboutData)
+		KUniqueApplication.addCmdLineOptions()
+
+		if not KUniqueApplication.start():
+			print "%s is already running" % name
+			sys.exit(0)
+
 		app = KUniqueApplication()
 	except ImportError:
 		app = QApplication(sys.argv)
 		app.setOrganizationName("MTSoft")
 		app.setApplicationName(name)
-	
+
 
 	if QSystemTrayIcon.isSystemTrayAvailable():
 		translator = QTranslator()
