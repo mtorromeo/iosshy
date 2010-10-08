@@ -49,6 +49,12 @@ def main():
 		aboutData.setProgramLogo(QImage(":icons/network-server.png"))
 
 		KCmdLineArgs.init (sys.argv, aboutData)
+		KUniqueApplication.addCmdLineOptions()
+
+		if not KUniqueApplication.start():
+			print "%s is already running" % name
+			sys.exit(0)
+
 		app = KUniqueApplication()
 	except ImportError:
 		app = QApplication(sys.argv)
