@@ -233,8 +233,8 @@ class Tunnel(object):
 						self.close()
 
 	def close(self, message="Closing tunnel", icon=QSystemTrayIcon.Information):
-		self._parent.tray.showMessage(self.name, message, icon)
 		if self._thread is not None:
+			self._parent.tray.showMessage(self.name, message, icon)
 			if self._commandThread is not None:
 				self._commandThread.join()
 				self._commandThread = None
