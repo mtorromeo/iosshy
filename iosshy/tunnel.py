@@ -6,7 +6,10 @@ from subprocess import Popen
 import keyring
 from PyQt4.QtCore import Qt, QObject, pyqtSignal
 from PyQt4.QtGui import QInputDialog, QLineEdit
-import Crypto.Random as Random
+try:
+	import Crypto.Random as Random
+except ImportError as e:
+	Random = None
 
 class ForwardServer(SocketServer.ThreadingTCPServer):
 	daemon_threads = True
@@ -41,7 +44,8 @@ class Handler(SocketServer.BaseRequestHandler):
 class TunnelThread(Thread):
 	def __init__(self, ssh_server, local_port=0, ssh_port=22, remote_host="localhost", remote_port=None, username=None, password=None):
 		Thread.__init__(self)
-		Random.atfork()
+		if Random is not None:
+			Random.atfork()
 		if remote_port is None:
 			remote_port = local_port
 		self.local_port = local_port
