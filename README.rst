@@ -33,9 +33,9 @@ Packages
 ''''''''
 The following packages are available:
 
- * `Windows 32bit installer <http://cloud.github.com/downloads/mtorromeo/iosshy/iosshy-win32-1.3.exe>`_
+ * `Windows 32bit installer <http://cloud.github.com/downloads/mtorromeo/iosshy/iosshy-win32-1.4.exe>`_
  * `Arch Linux <http://aur.archlinux.org/packages.php?ID=34495>`_
- * `Source tarball <http://github.com/mtorromeo/iosshy/tarball/v1.3>`_
+ * `Source tarball <http://github.com/mtorromeo/iosshy/tarball/v1.4>`_
 
 The code is hosted on `github <http://github.com/mtorromeo/iosshy>`_
 
@@ -51,6 +51,7 @@ IOSSHy is a **python 2.6** application and it also depends upon the following ex
  * PyQt4 (4.6+)
  * python-paramiko
  * python-keyring
+ * PyCrypto (For unix only)
 
 Build instructions
 ''''''''''''''''''
@@ -64,6 +65,12 @@ There is a unix shell script in the root of the distribution package named *buil
 
 CHANGELOG
 ---------
+
+Since version 1.3
+
+ * Removed PyCrypto requirement on Windows
+ * Implemented check for application already running on KDE
+ * Fixed message "Closing tunnel" being shown multiple times
 
 Since version 1.2
 
