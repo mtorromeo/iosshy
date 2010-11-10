@@ -49,8 +49,9 @@ IOSSHy is a **python 2.6** application and it also depends upon the following ex
 
  * PyKDE4 (Optional for better KDE4 integration)
  * PyQt4 (4.6+)
- * python-paramiko
- * python-keyring
+ * paramiko
+ * keyring
+ * setproctitle
  * PyCrypto (For unix only)
 
 Build instructions
