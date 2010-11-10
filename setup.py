@@ -67,7 +67,7 @@ setup(
 	name = application.name,
 	packages = ["iosshy"],
 	scripts = [mainscript],
-	requires = ["paramiko", "keyring"],
+	requires = ["paramiko", "keyring", "setproctitle"],
 	version = application.version,
 	description = application.description,
 	long_description = open(README).read(),
