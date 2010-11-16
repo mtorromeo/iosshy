@@ -45,7 +45,7 @@ Clone command::
 
 Dependencies
 ''''''''''''
-IOSSHy is a **python 2.6** application and it also depends upon the following external libraries:
+IOSSHy is a **python 2.6+** application and it also depends upon the following external libraries:
 
  * PyKDE4 (Optional for better KDE4 integration)
  * PyQt4 (4.6+)

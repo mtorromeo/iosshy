@@ -79,6 +79,7 @@ setup(
 	classifiers = [
 		"Programming Language :: Python",
 		"Programming Language :: Python :: 2.6",
+		"Programming Language :: Python :: 2.7",
 		"Development Status :: 5 - Production/Stable",
 		"License :: OSI Approved :: BSD License",
 		"Environment :: X11 Applications :: Qt",
