@@ -35,7 +35,7 @@ The following packages are available:
 
  * `Windows 32bit installer <http://cloud.github.com/downloads/mtorromeo/iosshy/iosshy-win32-1.4.exe>`_
  * `Arch Linux <http://aur.archlinux.org/packages.php?ID=34495>`_
- * `Source tarball <http://github.com/mtorromeo/iosshy/tarball/v1.4>`_
+ * `Source tarball <http://github.com/mtorromeo/iosshy/tarball/v1.5>`_
 
 The code is hosted on `github <http://github.com/mtorromeo/iosshy>`_
 
@@ -66,6 +66,12 @@ There is a unix shell script in the root of the distribution package named *buil
 
 CHANGELOG
 ---------
+
+New in version 1.5
+ * Clicking on the tray icon now toggles the configuration dialog visibility
+ * Modified process title to be "iosshy" instead of the generic "python"
+ * Included missing file from sdist (Fixes #6)
+ * Removed problematic unique application check (will return in future versions)
 
 New in version 1.4
 
