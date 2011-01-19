@@ -24,59 +24,58 @@ version = "1.4"
 url = "http://github.com/mtorromeo/iosshy"
 
 def main():
-	global app, aboutData
+    global app, aboutData
 
-	setproctitle.setproctitle("iosshy")
+    setproctitle.setproctitle("iosshy")
 
-	try:
-		from PyKDE4.kdecore import ki18n, KAboutData, KCmdLineArgs
-		from PyKDE4.kdeui import KUniqueApplication
+    try:
+        from PyKDE4.kdecore import ki18n, KAboutData, KCmdLineArgs
+        from PyKDE4.kdeui import KApplication, KIcon
 
-		aboutData = KAboutData(
-			name, #appName
-			"", #catalogName
-			ki18n(name), #programName
-			version,
-			ki18n(description), #shortDescription
-			KAboutData.License_BSD, #licenseKey
-			ki18n("© 2010 Massimiliano Torromeo"), #copyrightStatement
-			ki18n(""), #text
-			url #homePageAddress
-		)
-		aboutData.setBugAddress("http://github.com/mtorromeo/iosshy/issues")
-		aboutData.addAuthor(
-			ki18n("Massimiliano Torromeo"), #name
-			ki18n("Main developer"), #task
-			"massimiliano.torromeo@gmail.com" #email
-		)
-		aboutData.setProgramLogo(QImage(":icons/network-server.png"))
+        aboutData = KAboutData(
+            name, #appName
+            name, #catalogName
+            ki18n(name), #programName
+            version,
+            ki18n(description), #shortDescription
+            KAboutData.License_BSD, #licenseKey
+            ki18n("© 2010 Massimiliano Torromeo"), #copyrightStatement
+            ki18n(""), #text
+            url #homePageAddress
+        )
+        aboutData.setBugAddress("http://github.com/mtorromeo/iosshy/issues")
+        aboutData.addAuthor(
+            ki18n("Massimiliano Torromeo"), #name
+            ki18n("Main developer"), #task
+            "massimiliano.torromeo@gmail.com" #email
+        )
+        aboutData.setProgramLogo(QImage(":icons/network-server.png"))
 
-		KCmdLineArgs.init (sys.argv, aboutData)
-		KUniqueApplication.addCmdLineOptions()
+        KCmdLineArgs.init(sys.argv, aboutData)
 
-		if not KUniqueApplication.start():
-			print "%s is already running" % name
-			sys.exit(0)
+        app = KApplication()
+        app.setWindowIcon(KIcon("network-server"))
 
-		app = KUniqueApplication()
-	except ImportError:
-		app = QApplication(sys.argv)
-		app.setOrganizationName("MTSoft")
-		app.setApplicationName(name)
+        if app.isSessionRestored():
+            sys.exit(0)
+    except ImportError:
+        app = QApplication(sys.argv)
+        app.setOrganizationName("MTSoft")
+        app.setApplicationName(name)
 
 
-	if QSystemTrayIcon.isSystemTrayAvailable():
-		translator = QTranslator()
-		qmFile = "tunneller_%s.qm" % QLocale.system().name()
-		if os.path.isfile(qmFile):
-			translator.load(qmFile)
-		app.installTranslator(translator)
+    if QSystemTrayIcon.isSystemTrayAvailable():
+        translator = QTranslator()
+        qmFile = "tunneller_%s.qm" % QLocale.system().name()
+        if os.path.isfile(qmFile):
+            translator.load(qmFile)
+        app.installTranslator(translator)
 
-		dialog = TunnelDialog()
-		sys.exit(app.exec_())
-	else:
-		print "System tray not available. Exiting."
-		sys.exit(1)
+        dialog = TunnelDialog()
+        sys.exit(app.exec_())
+    else:
+        print "System tray not available. Exiting."
+        sys.exit(1)
 
 if __name__ == "__main__":
-	main()
+    main()
