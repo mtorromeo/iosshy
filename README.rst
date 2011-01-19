@@ -74,19 +74,16 @@ New in version 1.5
  * Removed problematic unique application check (will return in future versions)
 
 New in version 1.4
-
  * Removed PyCrypto requirement on Windows
  * Implemented check for application already running on KDE
  * Fixed message "Closing tunnel" being shown multiple times
 
 New in version 1.3
-
  * Fixed crash on application quit
  * Settings are saved as soon as the configuration dialog is closed
  * Fixed crash in about dialog when main window is hidden
 
 New in version 1.2
-
  * Called required Random.atfork in tunnel thread, to ensure RNG thread safety
  * Suppressed RandomPool deprecation warning (paramiko should fix this)
 
