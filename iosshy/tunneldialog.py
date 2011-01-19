@@ -54,8 +54,14 @@ class TunnelDialog(WindowBaseClass, Ui_TunnelDialog):
 
         # Load settings
         self.readSettings()
+        self.hide()
+
+    def show(self):
+        self.visible = True
+        WindowBaseClass.show(self)
 
     def hide(self):
+        self.visible = False
         self.writeSettings()
         WindowBaseClass.hide(self)
 
@@ -163,7 +169,11 @@ class TunnelDialog(WindowBaseClass, Ui_TunnelDialog):
                 self.tray.menu.insertAction(self.actionLastSep, self.actionNoTun)
 
     def activated(self):
-        self.show()
+        print self.visible
+        if self.visible:
+            self.hide()
+        else:
+            self.show()
 
     def readSettings(self):
         if os.name == 'nt':
