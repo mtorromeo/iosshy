@@ -169,7 +169,6 @@ class TunnelDialog(WindowBaseClass, Ui_TunnelDialog):
                 self.tray.menu.insertAction(self.actionLastSep, self.actionNoTun)
 
     def activated(self):
-        print self.visible
         if self.visible:
             self.hide()
         else:

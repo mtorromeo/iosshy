@@ -4,16 +4,10 @@ import sip, os, sys
 sip.setapi("QString", 2)
 sip.setapi("QVariant", 2)
 
-import setproctitle
 import warnings
 warnings.filterwarnings("ignore", ".*sha module is deprecated.*", DeprecationWarning)
 warnings.filterwarnings("ignore", ".*md5 module is deprecated.*", DeprecationWarning)
 warnings.filterwarnings("ignore", ".*This application uses RandomPool.*", DeprecationWarning)
-
-from PyQt4.QtCore import QCoreApplication, QTranslator, QLocale, QSettings
-from PyQt4.QtGui import QApplication, QSystemTrayIcon, QImage
-
-from tunneldialog import TunnelDialog
 
 app = None
 aboutData = None
@@ -26,7 +20,13 @@ url = "http://github.com/mtorromeo/iosshy"
 def main():
     global app, aboutData
 
+    import setproctitle
     setproctitle.setproctitle("iosshy")
+
+    from PyQt4.QtCore import QCoreApplication, QTranslator, QLocale, QSettings
+    from PyQt4.QtGui import QApplication, QSystemTrayIcon, QImage
+
+    from tunneldialog import TunnelDialog
 
     try:
         from PyKDE4.kdecore import ki18n, KAboutData, KCmdLineArgs
