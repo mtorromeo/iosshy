@@ -67,6 +67,9 @@ There is a unix shell script in the root of the distribution package named *buil
 CHANGELOG
 ---------
 
+New in version 1.6
+ * Fixed loading of the autoclose setting
+
 New in version 1.5
  * Clicking on the tray icon now toggles the configuration dialog visibility
  * Modified process title to be "iosshy" instead of the generic "python"
