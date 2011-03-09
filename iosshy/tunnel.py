@@ -120,11 +120,19 @@ class Tunnel(object):
         else:
             return port if 0 < port < 65536 else None
 
-    def getAction(self):
+    @property
+    def action(self):
         return self._action
 
-    def getItem(self):
+    @property
+    def item(self):
         return self._item
+
+    @property
+    def tunnelPort(self):
+        if not self.isOpen():
+            return self.localPort
+        return self._thread.local_port
 
     def getName(self):
         return self._name
@@ -162,8 +170,6 @@ class Tunnel(object):
     port = property(getPort, setPort)
     localPort = property(getLocalPort, setLocalPort)
     sshPort = property(getSshPort, setSshPort)
-    action = property(getAction)
-    item = property(getItem)
 
     def readSettings(self, settings):
         settings.beginGroup(self.name)
@@ -193,11 +199,12 @@ class Tunnel(object):
 
     def toggle(self, openTunnel):
         if openTunnel:
-            openTunnel = self._thread is None
+            openTunnel = not self.isOpen()
         if openTunnel:
             self.open_()
         else:
             self.close()
+        self._parent.updateTooltip()
 
     def open_(self):
         connectionName = "{0}@{1}:{2}".format(self.username, self.host, self.sshPort)
@@ -221,7 +228,7 @@ class Tunnel(object):
             else:
                 self._parent.tray.showMessage(self.name, "Tunnel active")
 
-        if self._thread is not None:
+        if self.isOpen():
             self._thread.start()
             if self.command is not None:
                 command = self.command
@@ -238,8 +245,11 @@ class Tunnel(object):
                     if self.autoClose:
                         self.close()
 
+    def isOpen(self):
+        return self._thread is not None
+
     def close(self, message="Closing tunnel", icon=QSystemTrayIcon.Information):
-        if self._thread is not None:
+        if self.isOpen():
             self._parent.tray.showMessage(self.name, message, icon)
             if self._commandThread is not None:
                 self._commandThread.join()

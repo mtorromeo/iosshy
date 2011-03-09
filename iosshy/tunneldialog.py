@@ -168,6 +168,15 @@ class TunnelDialog(WindowBaseClass, Ui_TunnelDialog):
             if len(self._tunnels) == 0:
                 self.tray.menu.insertAction(self.actionLastSep, self.actionNoTun)
 
+    def updateTooltip(self):
+        tuninfo = []
+        for tunnel in self._tunnels:
+            if tunnel.isOpen():
+                tuninfo.append( "<div>{name}: {host}:{port} => {local}</div>".format(name=tunnel.name, host=tunnel.host, port=tunnel.port, local=tunnel.tunnelPort) )
+        if tuninfo:
+            tuninfo.insert(0, "<b>Active tunnels:</b>")
+        self.tray.setToolTipSubTitle( "\n".join(tuninfo) )
+
     def activated(self):
         if self.visible:
             self.hide()

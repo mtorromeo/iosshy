@@ -42,6 +42,10 @@ class Tray(QObject):
             self.tray.setToolTip(title)
         self.menu.setTitle(title)
 
+    def setToolTipSubTitle(self, subtitle):
+        if kde:
+            self.tray.setToolTipSubTitle(subtitle)
+
     def setIcon(self, icon):
         if kde:
             self.tray.setIconByPixmap(icon)
