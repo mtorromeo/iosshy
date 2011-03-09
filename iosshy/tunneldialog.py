@@ -175,6 +175,9 @@ class TunnelDialog(WindowBaseClass, Ui_TunnelDialog):
                 tuninfo.append( "<div>{name}: {host}:{port} => {local}</div>".format(name=tunnel.name, host=tunnel.host, port=tunnel.port, local=tunnel.tunnelPort) )
         if tuninfo:
             tuninfo.insert(0, "<b>Active tunnels:</b>")
+            self.tray.setActive()
+        else:
+            self.tray.setActive(False)
         self.tray.setToolTipSubTitle( "\n".join(tuninfo) )
 
     def activated(self):

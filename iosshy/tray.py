@@ -19,7 +19,7 @@ class Tray(QObject):
         if kde:
             self.menu = KMenu(parent)
             self.tray = KStatusNotifierItem(parent)
-            self.tray.setStatus(KStatusNotifierItem.Active)
+            self.tray.setStatus(KStatusNotifierItem.Passive)
             self.tray.setCategory(KStatusNotifierItem.ApplicationStatus)
             self.tray.setAssociatedWidget(parent)
             self.tray.setStandardActionsEnabled(False)
@@ -33,6 +33,10 @@ class Tray(QObject):
         if not kde:
             self.tray.show()
         self.tray.setContextMenu(self.menu)
+
+    def setActive(self, active=True):
+        if kde:
+            self.tray.setStatus(KStatusNotifierItem.Active if active else KStatusNotifierItem.Passive)
 
     def setTitle(self, title):
         if kde:
