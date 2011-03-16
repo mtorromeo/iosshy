@@ -33,7 +33,7 @@ Packages
 ''''''''
 The following packages are available:
 
- * `Windows 32bit installer <http://cloud.github.com/downloads/mtorromeo/iosshy/iosshy-win32-1.4.exe>`_
+ * `Windows 32bit installer <https://github.com/downloads/mtorromeo/iosshy/iosshy-win32-1.6.exe>`_
  * `Arch Linux <http://aur.archlinux.org/packages.php?ID=34495>`_
  * `Source tarball <http://github.com/mtorromeo/iosshy/tarball/v1.6>`_
 
