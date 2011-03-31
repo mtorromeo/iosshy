@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 
-import sys, os
+import application
+import os
+import sys
+
 from PyQt4.QtGui import QIcon, QDialog, QAction, QKeySequence, QListWidgetItem, QItemSelectionModel
 from PyQt4.QtCore import Qt, pyqtSignature, QSettings
 from tunnel import Tunnel
@@ -8,17 +11,14 @@ from tray import Tray
 from Ui_tunneldialog import Ui_TunnelDialog
 
 try:
-    from PyKDE4.kdeui import KAboutApplicationDialog, KMainWindow
-    import application
+    from PyKDE4.kdeui import KAboutApplicationDialog
     kde = True
-    class WindowBaseClass(QDialog, KMainWindow): pass
 except ImportError:
     kde = False
-    class WindowBaseClass(QDialog): pass
 
-class TunnelDialog(WindowBaseClass, Ui_TunnelDialog):
+class TunnelDialog(QDialog, Ui_TunnelDialog):
     def __init__(self):
-        WindowBaseClass.__init__(self)
+        QDialog.__init__(self)
         self.setupUi(self)
         self._explicitQuit = False
 
@@ -58,12 +58,12 @@ class TunnelDialog(WindowBaseClass, Ui_TunnelDialog):
 
     def show(self):
         self.visible = True
-        WindowBaseClass.show(self)
+        QDialog.show(self)
 
     def hide(self):
         self.visible = False
         self.writeSettings()
-        WindowBaseClass.hide(self)
+        QDialog.hide(self)
 
     def closeEvent(self, event):
         if not self._explicitQuit:
