@@ -55,9 +55,6 @@ def main():
 
         app = KApplication()
         app.setWindowIcon(KIcon("network-server"))
-
-        if app.isSessionRestored():
-            sys.exit(0)
     except ImportError:
         app = QApplication(sys.argv)
         app.setOrganizationName("MTSoft")
