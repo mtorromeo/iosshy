@@ -67,6 +67,11 @@ There is a unix shell script in the root of the distribution package named *buil
 CHANGELOG
 ---------
 
+New in version 1.7
+ * Use system icons on KDE
+ * Implemented Active/Passive tray states in KDE
+ * Allow application to be restored from an earlier session
+
 New in version 1.6
  * Fixed loading of the autoclose setting
 
