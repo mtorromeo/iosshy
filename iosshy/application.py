@@ -14,7 +14,7 @@ aboutData = None
 
 name = "IOSSHy"
 description = "Desktop tool to quickly setup SSH tunnels and automatically execute commands that make use of them"
-version = "1.6"
+version = "1.7"
 url = "http://github.com/mtorromeo/iosshy"
 
 def main():
@@ -39,7 +39,7 @@ def main():
             version,
             ki18n(description), #shortDescription
             KAboutData.License_BSD, #licenseKey
-            ki18n("© 2010 Massimiliano Torromeo"), #copyrightStatement
+            ki18n("© 2010-2011 Massimiliano Torromeo"), #copyrightStatement
             ki18n(""), #text
             url #homePageAddress
         )

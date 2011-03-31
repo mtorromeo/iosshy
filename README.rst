@@ -97,7 +97,7 @@ New in version 1.2
 
 LICENSE
 -------
-Copyright (c) 2010 Massimiliano Torromeo
+Copyright (c) 2010-2011 Massimiliano Torromeo
 
 IOSSHy is free software released under the terms of the BSD license.
 
