@@ -4,17 +4,24 @@ import application
 import os
 import sys
 
-from PyQt4.QtGui import QIcon, QDialog, QAction, QKeySequence, QListWidgetItem, QItemSelectionModel
+from PyQt4.QtGui import QDialog, QAction, QKeySequence, QListWidgetItem, QItemSelectionModel
 from PyQt4.QtCore import Qt, pyqtSignature, QSettings
 from tunnel import Tunnel
 from tray import Tray
 from Ui_tunneldialog import Ui_TunnelDialog
 
 try:
-    from PyKDE4.kdeui import KAboutApplicationDialog
+    from PyKDE4.kdeui import KAboutApplicationDialog, KIcon
     kde = True
+
+    class Icon(KIcon): pass
 except ImportError:
+    from PyQt4.QtGui import QIcon
     kde = False
+
+    class Icon(QIcon):
+        def __init__(self, name):
+            QIcon.__init__(":/icons/%s.png" % name)
 
 class TunnelDialog(QDialog, Ui_TunnelDialog):
     def __init__(self):
@@ -26,11 +33,12 @@ class TunnelDialog(QDialog, Ui_TunnelDialog):
         self._tunnels = []
 
         # Setup tray
-        self.tray = Tray(self, "IOSSHy", QIcon(":/icons/network-server.png"))
+        self.tray = Tray(self, "IOSSHy", Icon("network-server"))
         self.tray.activated.connect(self.activated)
 
         action = QAction("&Configure", self.tray.menu)
-        action.setIcon(QIcon(":/icons/configure.png"))
+        action.setIcon(Icon("configure"))
+        action.setIconVisibleInMenu(True)
         action.triggered.connect(self.show)
         self.tray.menu.addAction(action)
         self.tray.menu.setDefaultAction(action)
@@ -47,7 +55,7 @@ class TunnelDialog(QDialog, Ui_TunnelDialog):
             self.tray.menu.addAction(action)
 
         action = QAction("&Quit", self.tray.menu)
-        action.setIcon(QIcon(":/icons/application-exit.png"))
+        action.setIcon(Icon("application-exit"))
         action.setShortcut(QKeySequence(Qt.CTRL + Qt.Key_Q))
         action.triggered.connect(self.quit)
         self.tray.menu.addAction(action)

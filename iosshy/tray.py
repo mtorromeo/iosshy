@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from PyQt4.QtCore import QObject, pyqtSignal
-from PyQt4.QtGui import QIcon
 try:
     from PyKDE4.kdeui import KStatusNotifierItem, KMenu
     kde = True
