@@ -33,9 +33,9 @@ Packages
 ''''''''
 The following packages are available:
 
- * `Windows 32bit installer <https://github.com/downloads/mtorromeo/iosshy/iosshy-win32-1.6.exe>`_
- * `Arch Linux <http://aur.archlinux.org/packages.php?ID=34495>`_
- * `Source tarball <http://github.com/mtorromeo/iosshy/tarball/v1.6>`_
+* `Windows 32bit installer <https://github.com/downloads/mtorromeo/iosshy/iosshy-win32-1.6.exe>`_
+* `Arch Linux <http://aur.archlinux.org/packages.php?ID=34495>`_
+* `Source tarball <http://github.com/mtorromeo/iosshy/tarball/v1.6>`_
 
 The code is hosted on `github <http://github.com/mtorromeo/iosshy>`_
 
@@ -47,12 +47,12 @@ Dependencies
 ''''''''''''
 IOSSHy is a **python 2.6+** application and it also depends upon the following external libraries:
 
- * PyKDE4 (Optional for better KDE4 integration)
- * PyQt4 (4.6+)
- * paramiko
- * keyring
- * setproctitle
- * PyCrypto (For unix only)
+* PyKDE4 (Optional for better KDE4 integration)
+* PyQt4 (4.6+)
+* paramiko
+* keyring
+* setproctitle
+* PyCrypto (For unix only)
 
 Build instructions
 ''''''''''''''''''

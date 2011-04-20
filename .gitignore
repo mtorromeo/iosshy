@@ -1,6 +1,6 @@
 *.pyc
 *.pyo
 Ui_*.py
-build
-dist
-IOSSHy.egg-info
+/build
+/dist
+/IOSSHy.egg-info
