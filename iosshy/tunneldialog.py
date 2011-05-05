@@ -86,6 +86,7 @@ class TunnelDialog(QDialog, Ui_TunnelDialog):
 
             self.txtName.setText( tunnel.name )
             self.txtHost.setText( "localhost" if tunnel.host == "" else tunnel.host )
+            self.txtRemoteHost.setText( "localhost" if tunnel.remoteHost == "" else tunnel.remoteHost )
             self.txtLocalPort.setText( "0" if tunnel.localPort is None else str(tunnel.localPort) )
             self.txtPort.setText( str(tunnel.port) )
             self.txtSshPort.setText( str(tunnel.sshPort) )
@@ -98,6 +99,7 @@ class TunnelDialog(QDialog, Ui_TunnelDialog):
         else:
             self.txtName.setText("")
             self.txtHost.setText("localhost")
+            self.txtRemoteHost.setText("localhost")
             self.txtLocalPort.setText("0")
             self.txtPort.setText("")
             self.txtSshPort.setText("22")
@@ -117,6 +119,9 @@ class TunnelDialog(QDialog, Ui_TunnelDialog):
 
     def on_txtHost_textEdited(self, text):
         self.currentTunnel().host = text
+
+    def on_txtRemoteHost_textEdited(self, text):
+        self.currentTunnel().remoteHost = text
 
     def on_txtLocalPort_textEdited(self, text):
         self.currentTunnel().localPort = text

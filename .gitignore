@@ -1,3 +1,5 @@
+.*
+!.gitignore
 *.pyc
 *.pyo
 Ui_*.py

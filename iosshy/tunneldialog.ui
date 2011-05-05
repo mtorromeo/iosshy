@@ -64,7 +64,7 @@
         <item row="0" column="1">
          <widget class="QLineEdit" name="txtName"/>
         </item>
-        <item row="1" column="0">
+        <item row="2" column="0">
          <widget class="QLabel" name="lblPort">
           <property name="text">
            <string>Remote Port</string>
@@ -74,14 +74,14 @@
           </property>
          </widget>
         </item>
-        <item row="1" column="1">
+        <item row="2" column="1">
          <widget class="QLineEdit" name="txtPort">
           <property name="inputMask">
            <string>00009; </string>
           </property>
          </widget>
         </item>
-        <item row="2" column="0">
+        <item row="3" column="0">
          <widget class="QLabel" name="lblLocalPort">
           <property name="text">
            <string>Local Port</string>
@@ -91,7 +91,7 @@
           </property>
          </widget>
         </item>
-        <item row="2" column="1">
+        <item row="3" column="1">
          <widget class="QLineEdit" name="txtLocalPort">
           <property name="toolTip">
            <string>If local port is set to 0, a random high-numbered port will be selected</string>
@@ -101,7 +101,7 @@
           </property>
          </widget>
         </item>
-        <item row="3" column="0">
+        <item row="4" column="0">
          <widget class="QLabel" name="lblCommand">
           <property name="text">
            <string>Command</string>
@@ -111,19 +111,29 @@
           </property>
          </widget>
         </item>
-        <item row="3" column="1">
+        <item row="4" column="1">
          <widget class="QLineEdit" name="txtCommand">
           <property name="toolTip">
            <string>The string {port} in the command line will be replaced by the local port number (useful when the local port is selected by IOSSHy)</string>
           </property>
          </widget>
         </item>
-        <item row="4" column="1">
+        <item row="5" column="1">
          <widget class="QCheckBox" name="chkCloseOnTerm">
           <property name="text">
            <string>Automatically close on command termination</string>
           </property>
          </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="lblRemoteHost">
+          <property name="text">
+           <string>Remote Host</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QLineEdit" name="txtRemoteHost"/>
         </item>
        </layout>
       </widget>

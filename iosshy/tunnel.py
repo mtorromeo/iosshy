@@ -8,7 +8,7 @@ from PyQt4.QtCore import Qt, QObject, pyqtSignal
 from PyQt4.QtGui import QInputDialog, QLineEdit
 try:
     import Crypto.Random as Random
-except ImportError as e:
+except ImportError:
     Random = None
 
 class ForwardServer(SocketServer.ThreadingTCPServer):
@@ -25,7 +25,6 @@ class Handler(SocketServer.BaseRequestHandler):
         if chan is None:
             return
 
-        #verbose('Connected! Tunnel open %r -> %r -> %r' % (self.request.getpeername(), chan.getpeername(), (self.chain_host, self.chain_port)))
         while True:
             r, w, x = select.select([self.request, chan], [], [])
             if self.request in r:
@@ -44,7 +43,7 @@ class Handler(SocketServer.BaseRequestHandler):
 class TunnelThread(Thread):
     def __init__(self, ssh_server, local_port=0, ssh_port=22, remote_host="localhost", remote_port=None, username=None, password=None):
         Thread.__init__(self)
-        if Random is not None:
+        if Random:
             Random.atfork()
         if remote_port is None:
             remote_port = local_port
@@ -99,6 +98,7 @@ class Tunnel(object):
         self._parent = parent
         self._name = "New Tunnel"
         self.host = "localhost"
+        self.remoteHost = "localhost"
         self._localPort = 0
         self._port = 80
         self._sshPort = 22
@@ -174,6 +174,7 @@ class Tunnel(object):
     def readSettings(self, settings):
         settings.beginGroup(self.name)
         self.host = settings.value("host", "localhost")
+        self.remoteHost = settings.value("remoteHost", "localhost")
         self.sshPort = settings.value("sshPort", "22")
         self.localPort = settings.value("localPort", None)
         self.port = settings.value("port", None)
@@ -187,6 +188,7 @@ class Tunnel(object):
     def writeSettings(self, settings):
         settings.beginGroup(self.name)
         settings.setValue("host", self.host)
+        settings.setValue("remoteHost", self.remoteHost)
         settings.setValue("sshPort", self.sshPort)
         if self.localPort is not None:
             settings.setValue("localPort", self.localPort)
@@ -213,7 +215,7 @@ class Tunnel(object):
         while try2connect:
             try2connect = False
             try:
-                self._thread = TunnelThread(username=self.username, password=password, ssh_server=self.host, ssh_port=self.sshPort, local_port=self.localPort, remote_port=self.port)
+                self._thread = TunnelThread(username=self.username, password=password, ssh_server=self.host, ssh_port=self.sshPort, local_port=self.localPort, remote_host=self.remoteHost, remote_port=self.port)
             except paramiko.BadHostKeyException as e:
                 self.close(str(e), QSystemTrayIcon.Warning)
             except (paramiko.PasswordRequiredException, paramiko.AuthenticationException) as e:
