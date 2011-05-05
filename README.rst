@@ -68,6 +68,7 @@ CHANGELOG
 ---------
 
 New in version 1.7
+ * Implemented remote host configuration
  * Use system icons on KDE
  * Implemented Active/Passive tray states in KDE
  * Allow application to be restored from an earlier session
