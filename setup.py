@@ -65,7 +65,11 @@ else:
 setup(
 	name = application.name,
 	packages = ["iosshy"],
-	scripts = [mainscript],
+	entry_points = {
+		'gui_scripts': [
+			'iosshy = iosshy.application:main',
+		],
+	},
 	requires = ["paramiko", "keyring", "setproctitle"],
 	version = application.version,
 	description = application.description,
