@@ -186,7 +186,7 @@ class Tunnel(object):
         self.username = settings.value("username", "root")
         self.command = settings.value("command", None)
         self.autoClose = settings.value("autoClose", False)
-        if isinstance(self.autoClose, basestring):
+        if isinstance(self.autoClose, str):
             self.autoClose = self.autoClose == "true"
         settings.endGroup()
 
