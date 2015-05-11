@@ -17,7 +17,6 @@ Usage (Windows):
 from iosshy import application
 import sys, os
 from setuptools import setup
-#from distutils.core import setup
 
 mainscript = 'bin/iosshy'
 README = os.path.join(os.path.dirname(__file__), 'README.rst')
@@ -26,8 +25,8 @@ README = os.path.join(os.path.dirname(__file__), 'README.rst')
 from PyQt4 import uic
 for form in ("tunneldialog.ui",):
 	uif = "Ui_{0}.py".format( form.rpartition('.')[0] )
-	with open(os.path.join("iosshy", uif), "wb") as f:
-		uic.compileUi(os.path.join("iosshy", form), f)
+	with open(os.path.join("iosshy", uif), "w") as f:
+		uic.compileUi(os.path.join("iosshy", form), f, from_imports=True)
 
 if sys.platform == 'darwin':
 	extra_options = dict(
@@ -78,8 +77,7 @@ setup(
 	keywords = ["qt", "pyqt", "desktop", "ssh"],
 	classifiers = [
 		"Programming Language :: Python",
-		"Programming Language :: Python :: 2.6",
-		"Programming Language :: Python :: 2.7",
+		"Programming Language :: Python :: 3",
 		"Development Status :: 5 - Production/Stable",
 		"License :: OSI Approved :: BSD License",
 		"Environment :: X11 Applications :: Qt",
