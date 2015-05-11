@@ -26,7 +26,7 @@ def main():
     from PyQt4.QtCore import QCoreApplication, QTranslator, QLocale, QSettings
     from PyQt4.QtGui import QApplication, QSystemTrayIcon, QImage
 
-    from tunneldialog import TunnelDialog
+    from .tunneldialog import TunnelDialog
 
     try:
         from PyKDE4.kdecore import ki18n, KAboutData, KCmdLineArgs
@@ -39,7 +39,7 @@ def main():
             version,
             ki18n(description), #shortDescription
             KAboutData.License_BSD, #licenseKey
-            ki18n("© 2010-2011 Massimiliano Torromeo"), #copyrightStatement
+            ki18n("© 2010-2011 Massimiliano Torromeo".encode('utf-8')), #copyrightStatement
             ki18n(""), #text
             url #homePageAddress
         )
@@ -71,7 +71,7 @@ def main():
         dialog = TunnelDialog()
         sys.exit(app.exec_())
     else:
-        print "System tray not available. Exiting."
+        print("System tray not available. Exiting.")
         sys.exit(1)
 
 if __name__ == "__main__":

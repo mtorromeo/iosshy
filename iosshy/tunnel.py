@@ -1,25 +1,30 @@
 # -*- coding: utf-8 -*-
 
-import paramiko, select, SocketServer
+import paramiko
+import select
+import socketserver
+import keyring
+
 from threading import Thread
 from subprocess import Popen
-import keyring
+
 from PyQt4.QtCore import Qt, QObject, pyqtSignal
 from PyQt4.QtGui import QInputDialog, QLineEdit
+
 try:
     import Crypto.Random as Random
 except ImportError:
     Random = None
 
-class ForwardServer(SocketServer.ThreadingTCPServer):
+class ForwardServer(socketserver.ThreadingTCPServer):
     daemon_threads = True
     allow_reuse_address = True
 
-class Handler(SocketServer.BaseRequestHandler):
+class Handler(socketserver.BaseRequestHandler):
     def handle(self):
         try:
             chan = self.ssh_transport.open_channel('direct-tcpip', (self.chain_host, self.chain_port), self.request.getpeername())
-        except Exception, e:
+        except Exception as e:
             return
 
         if chan is None:

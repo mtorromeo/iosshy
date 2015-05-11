@@ -1,14 +1,15 @@
 # -*- coding: utf-8 -*-
 
-import application
 import os
 import sys
 
 from PyQt4.QtGui import QDialog, QAction, QKeySequence, QListWidgetItem, QItemSelectionModel
 from PyQt4.QtCore import Qt, pyqtSignature, QSettings
-from tunnel import Tunnel
-from tray import Tray
-from Ui_tunneldialog import Ui_TunnelDialog
+
+from . import application
+from .tunnel import Tunnel
+from .tray import Tray
+from .Ui_tunneldialog import Ui_TunnelDialog
 
 try:
     from PyKDE4.kdeui import KAboutApplicationDialog, KIcon
